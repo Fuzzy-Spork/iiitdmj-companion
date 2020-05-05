@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>655834412750-5gmieem3qag6ep4vl5o11lhqpbnvnvo6.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.655834412750-5gmieem3qag6ep4vl5o11lhqpbnvnvo6</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCRENpX2M56JVfg4liwTVjpTCzXGu_edcg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>655834412750</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.smv.iiitdmjCompanion</string>
+	<key>PROJECT_ID</key>
+	<string>iiitdmj-companion</string>
+	<key>STORAGE_BUCKET</key>
+	<string>iiitdmj-companion.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:655834412750:ios:3c5c63bdc95be48e27c29f</string>
+	<key>DATABASE_URL</key>
+	<string>https://iiitdmj-companion.firebaseio.com</string>
+</dict>
+</plist>
