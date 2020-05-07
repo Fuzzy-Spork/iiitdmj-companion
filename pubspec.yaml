@@ -32,7 +32,10 @@ dependencies:
   json_annotation: ^3.0.1
   weather_icons: ^2.0.1
   path_provider: ^1.6.7
+
   get_it: ^4.0.2
+  device_info: ^0.4.2+3
+
 
 dev_dependencies:
   flutter_test:
