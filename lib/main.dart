@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/models/user/user.dart';
-import 'package:iiitdmjcompanion/services/service_locator_service.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
 
-//Use var storageService = locator<StorageService>(); to access app database
+//Use Future builder to access database to access app database
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  setupLocator();
   runApp(MyApp());
 }
 
@@ -33,17 +30,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var storageService = locator<StorageService>();
   int _counter = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    User user = User(
-        year: Year.second, name: 'Sehej', branch: Branch.CSE, group: Group.A);
-    storageService.saveUserInDB(user);
-    print(user.year);
-  }
 
   void _incrementCounter() {
     setState(() {
@@ -53,42 +40,69 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(storageService.userInDB);
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
+      body: FutureBuilder(
+        future: StorageService.getInstance(),
+        builder: (context, AsyncSnapshot<StorageService> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+              print(snapshot.connectionState);
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            default:
+              if (!snapshot.hasError) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      //Text(snapshot.data.userInDB.name),
+                      OutlineButton(
+                        child: Text('Add User'),
+                        onPressed: () {
+                          User user = User(
+                              year: Year.second,
+                              name: 'Sehej',
+                              branch: Branch.CSE,
+                              group: Group.A);
+                          snapshot.data.saveUserInDB(user);
+                          print(user.year);
+                        },
+                      ),
+
+                      Text(snapshot.data.userInDB.name),
+                      Text(
+                        'You have pushed the button this many times:',
+                        style: TextStyle(fontFamily: 'code-bold'),
+                      ),
+                      Text(
+                        '$_counter',
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+          }
+        },
+//        child: Center(
+//          child: Column(
+//            mainAxisAlignment: MainAxisAlignment.center,
+//            children: <Widget>[
+//              Text(
+//                'You have pushed the button this many times:',
+//                style: TextStyle(fontFamily: 'code-bold'),
+//              ),
+//              Text(
+//                '$_counter',
+//              ),
+//            ],
+//          ),
+//        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
