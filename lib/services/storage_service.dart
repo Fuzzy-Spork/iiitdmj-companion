@@ -41,6 +41,13 @@ class StorageService {
     _sharedPreferences.setString(key, content);
   }
 
+  void deleteKey(String key) {
+    print(
+        '(TRACE) StorageService: deleteKey. key: $key value: ${_getFromDisk(
+            key)}');
+    _sharedPreferences.remove(key);
+  }
+
   void saveToDisk<T>(String key, T content) {
     print(
         '(TRACE) StorageService:_saveStringToDisk. key: $key value: $content');
