@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iiitdmjcompanion/models/user/user.dart';
+import 'package:iiitdmjcompanion/screens/home_screen.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
 
 //Use Future builder to access database to access app database
@@ -13,102 +13,72 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color(0xff24252A),
+        backgroundColor: Color(0xff24252A),
+        fontFamily: 'code-bold',
+        textTheme: TextTheme(
+          headline1: TextStyle(
+            fontSize: 40.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+          headline6: TextStyle(fontSize: 24.0, fontStyle: FontStyle.italic),
+          bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+        ),
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: LandingPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
+class LandingPage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _LandingPageState createState() => _LandingPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
+class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder(
-        future: StorageService.getInstance(),
-        builder: (context, AsyncSnapshot<StorageService> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              print(snapshot.connectionState);
-              return Center(
-                child: CircularProgressIndicator(),
+    return FutureBuilder(
+      future: StorageService.getInstance(),
+      builder: (context, AsyncSnapshot<StorageService> snapshot) {
+        if (snapshot.hasError) {
+          print('error');
+          return Center(child: CircularProgressIndicator());
+        } else {
+          try {
+            if (snapshot.data.userInDB == null) {
+              print('new user');
+              return UserSignUp(
+                title: 'User Sign Up',
               );
-            default:
-              if (!snapshot.hasError) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      //Text(snapshot.data.userInDB.name),
-                      OutlineButton(
-                        child: Text('Add User'),
+            } else {
+              //TODO: Implement User Logged In Home
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(snapshot.data.userInDB.name),
+                    OutlineButton(
+                        color: Colors.white,
+                        child: Text('asda'),
                         onPressed: () {
-                          User user = User(
-                              year: Year.second,
-                              name: 'Sehej',
-                              branch: Branch.CSE,
-                              group: Group.A);
-                          snapshot.data.saveUserInDB(user);
-                          print(user.year);
-                        },
-                      ),
-
-                      Text(snapshot.data.userInDB.name),
-                      Text(
-                        'You have pushed the button this many times:',
-                        style: TextStyle(fontFamily: 'code-bold'),
-                      ),
-                      Text(
-                        '$_counter',
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
+                          setState(() {
+                            snapshot.data.deleteKey(StorageService.UserKey);
+                          });
+                        }),
+                  ],
+                ),
+              );
+            }
+          } catch (e) {
+            print('Error: $e');
+            return UserSignUp(
+              title: 'User Sign Up',
+            );
           }
-        },
-//        child: Center(
-//          child: Column(
-//            mainAxisAlignment: MainAxisAlignment.center,
-//            children: <Widget>[
-//              Text(
-//                'You have pushed the button this many times:',
-//                style: TextStyle(fontFamily: 'code-bold'),
-//              ),
-//              Text(
-//                '$_counter',
-//              ),
-//            ],
-//          ),
-//        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        }
+      },
     );
   }
 }
