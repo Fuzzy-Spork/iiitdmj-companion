@@ -38,7 +38,7 @@ class StorageService {
   void saveStringToDisk(String key, String content) {
     print(
         '(TRACE) StorageService:_saveStringToDisk. key: $key value: $content');
-    _sharedPreferences.setString(UserKey, content);
+    _sharedPreferences.setString(key, content);
   }
 
   void saveToDisk<T>(String key, T content) {
