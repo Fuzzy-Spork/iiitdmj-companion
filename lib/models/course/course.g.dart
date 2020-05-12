@@ -12,7 +12,7 @@ Course _$CourseFromJson(Map<String, dynamic> json) {
     code: json['code'] as String,
     sem: _$enumDecodeNullable(_$SemesterEnumMap, json['sem']),
     instructors:
-    (json['instructors'] as List)?.map((e) => e as String)?.toList(),
+        (json['instructors'] as List)?.map((e) => e as String)?.toList(),
     year: json['year'] as String,
     group: json['group'] as bool,
     lab: json['lab'] as bool,
@@ -21,7 +21,7 @@ Course _$CourseFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$CourseToJson(Course instance) => <String, dynamic>{
-  'name': instance.name,
+      'name': instance.name,
       'code': instance.code,
       'instructors': instance.instructors,
       'year': instance.year,
