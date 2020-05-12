@@ -25,6 +25,7 @@ class Course {
   bool group;
   bool lab;
   String branch;
+  int credits;
 
   Course({
     this.name,
@@ -35,6 +36,7 @@ class Course {
     this.group,
     this.lab,
     this.branch,
+    this.credits,
   });
 
   factory Course.fromJson(Map<String, dynamic> json) => _$CourseFromJson(json);
