@@ -17,6 +17,7 @@ enum Semester {
 
 @JsonSerializable()
 class Course {
+  String name;
   String code;
   List<String> instructors;
   String year;
@@ -26,6 +27,7 @@ class Course {
   String branch;
 
   Course({
+    this.name,
     this.code,
     this.sem,
     this.instructors,

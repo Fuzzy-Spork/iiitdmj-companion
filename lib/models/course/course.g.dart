@@ -8,6 +8,7 @@ part of 'course.dart';
 
 Course _$CourseFromJson(Map<String, dynamic> json) {
   return Course(
+    name: json['name'] as String,
     code: json['code'] as String,
     sem: _$enumDecodeNullable(_$SemesterEnumMap, json['sem']),
     instructors:
@@ -20,6 +21,7 @@ Course _$CourseFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$CourseToJson(Course instance) => <String, dynamic>{
+      'name': instance.name,
       'code': instance.code,
       'instructors': instance.instructors,
       'year': instance.year,
