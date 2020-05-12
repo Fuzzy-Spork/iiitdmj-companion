@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iiitdmjcompanion/services/size_config.dart';
 
+enum Groupp { A, B }
+
 class UserSignUp extends StatefulWidget {
   UserSignUp({Key key, this.title}) : super(key: key);
 
@@ -15,6 +17,7 @@ class UserSignUp extends StatefulWidget {
 class _UserSignUpState extends State<UserSignUp> {
   String selectedBranch = 'CSE';
   List<String> branches = ['CSE', 'ECE', 'ME', 'Design'];
+  Groupp _character = Groupp.A;
 
   DropdownButton<String> androidDropdown() {
     List<DropdownMenuItem<String>> dropdownItems = [];
@@ -41,6 +44,51 @@ class _UserSignUpState extends State<UserSignUp> {
           selectedBranch = value;
         });
       },
+    );
+  }
+
+  Theme groupRow() {
+    return Theme(
+      data: ThemeData(
+        unselectedWidgetColor: Colors.white,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Radio(
+            value: Groupp.A,
+            groupValue: _character,
+            onChanged: (Groupp value) {
+              setState(() {
+                _character = value;
+              });
+            },
+          ),
+          Text(
+            'Group A',
+            style: TextStyle(color: Colors.white),
+          ),
+          SizedBox(
+            width: 10.0,
+          ),
+          Radio(
+            value: Groupp.B,
+            groupValue: _character,
+            onChanged: (Groupp value) {
+              setState(() {
+                _character = value;
+              });
+            },
+          ),
+          Text(
+            'Group B',
+            style: TextStyle(color: Colors.white),
+          ),
+          SizedBox(
+            width: 1.0,
+          ),
+        ],
+      ),
     );
   }
 
@@ -78,13 +126,17 @@ class _UserSignUpState extends State<UserSignUp> {
                     child: IntrinsicHeight(
                       child: Row(
                         children: <Widget>[
-                          Text(
-                            '@',
-                            style: TextStyle(
-                              fontFamily: 'code-light',
-                              color: Colors.white,
-                              fontSize: 35,
-                            ),
+//                          Text(
+//                            '@',
+//                            style: TextStyle(
+//                              fontFamily: 'code-light',
+//                              color: Colors.white,
+//                              fontSize: 35,
+//                            ),
+//                          ),
+                          Icon(
+                            Icons.person,
+                            color: Colors.white,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
@@ -136,7 +188,7 @@ class _UserSignUpState extends State<UserSignUp> {
                           Icon(
                             FontAwesomeIcons.codeBranch,
                             color: Colors.white,
-                            size: 33,
+                            size: 25,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
@@ -168,6 +220,9 @@ class _UserSignUpState extends State<UserSignUp> {
                     ),
                   ),
                 ),
+                Center(
+                  child: groupRow(),
+                )
               ],
             ),
           ),
@@ -242,6 +297,7 @@ class _LandingTextFieldState extends State<LandingTextField> {
     );
   }
 }
+
 //ListTile(
 //leading: Padding(
 //padding: const EdgeInsets.all(0),
