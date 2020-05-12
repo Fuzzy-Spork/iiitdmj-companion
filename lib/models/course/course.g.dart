@@ -17,6 +17,7 @@ Course _$CourseFromJson(Map<String, dynamic> json) {
     group: json['group'] as bool,
     lab: json['lab'] as bool,
     branch: json['branch'] as String,
+    credits: json['credits'] as int,
   );
 }
 
@@ -29,6 +30,7 @@ Map<String, dynamic> _$CourseToJson(Course instance) => <String, dynamic>{
       'group': instance.group,
       'lab': instance.lab,
       'branch': instance.branch,
+  'credits': instance.credits,
     };
 
 T _$enumDecode<T>(
