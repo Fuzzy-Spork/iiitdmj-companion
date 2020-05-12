@@ -54,20 +54,24 @@ class _LandingPageState extends State<LandingPage> {
               );
             } else {
               //TODO: Implement User Logged In Home
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(snapshot.data.userInDB.name),
-                    OutlineButton(
-                        color: Colors.white,
-                        child: Text('asda'),
-                        onPressed: () {
-                          setState(() {
-                            snapshot.data.deleteKey(StorageService.UserKey);
-                          });
-                        }),
-                  ],
+              return Scaffold(
+                body: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(snapshot.data.userInDB.name),
+                      FlatButton(
+                          color: Colors.blue,
+                          child: Text(
+                            'Sign Out',
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              snapshot.data.deleteKey(StorageService.UserKey);
+                            });
+                          }),
+                    ],
+                  ),
                 ),
               );
             }

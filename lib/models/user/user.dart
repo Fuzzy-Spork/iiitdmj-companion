@@ -48,3 +48,22 @@ class User {
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
 }
+
+const YearEnumMap = {
+  Year.first: 'First',
+  Year.second: 'Second',
+  Year.third: 'Third',
+  Year.fourth: 'Fourth',
+};
+
+const GroupEnumMap = {
+  Group.A: 'A',
+  Group.B: 'B',
+};
+
+const BranchEnumMap = {
+  Branch.CSE: 'CSE',
+  Branch.ECE: 'ECE',
+  Branch.ME: 'ME',
+  Branch.Design: 'Design',
+};
