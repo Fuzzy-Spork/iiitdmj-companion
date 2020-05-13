@@ -19,7 +19,9 @@ Instructor _$InstructorFromJson(Map<String, dynamic> json) {
     email: json['email'] as String,
     tilda: json['tilda'] as String,
     phone: json['phone'] as String,
-    post: json['post'] as String,
+    tags: (json['tags'] as List)
+        ?.map((e) => _$enumDecodeNullable(_$TagEnumMap, e))
+        ?.toList(),
   );
 }
 
@@ -33,7 +35,7 @@ Map<String, dynamic> _$InstructorToJson(Instructor instance) =>
       'email': instance.email,
       'tilda': instance.tilda,
       'phone': instance.phone,
-      'post': instance.post,
+      'tags': instance.tags?.map((e) => _$TagEnumMap[e])?.toList(),
     };
 
 T _$enumDecode<T>(
@@ -88,4 +90,21 @@ const _$DepartmentEnumMap = {
   Department.Design: 'Design',
   Department.ME: 'ME',
   Department.NS: 'NS',
+};
+
+const _$TagEnumMap = {
+  Tag.DeanStudents: 'Dean Students',
+  Tag.DeanPnD: 'Dean PnD',
+  Tag.DeanRSPC: 'Dean RSPC',
+  Tag.DeanAcad: 'Dean Academic',
+  Tag.ChairPlacement: 'Chair Placement',
+  Tag.HODCSE: 'HOD-CSE',
+  Tag.HODECE: 'HOD-ECE',
+  Tag.HODME: 'HOD-ME',
+  Tag.HODDesign: 'HOD-Design',
+  Tag.HODNS: 'HOD-NS',
+  Tag.CulturalCounsellor: 'Cultural Counsellor',
+  Tag.TechnicalCounsellor: 'Technical Counsellor',
+  Tag.HeadTT: 'Head TT',
+  Tag.HeadCounselingService: 'Head Counseling Service',
 };

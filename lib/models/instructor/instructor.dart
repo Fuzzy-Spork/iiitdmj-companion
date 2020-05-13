@@ -7,6 +7,23 @@ part 'instructor.g.dart';
 // **************************************************************************
 // DO NOT TOUCH
 // **************************************************************************
+
+enum Tag {
+@JsonValue('Dean Students')
+DeanStudents,@JsonValue('Dean PnD')
+DeanPnD,@JsonValue('Dean RSPC')
+DeanRSPC,@JsonValue('Dean Academic')
+DeanAcad,@JsonValue('Chair Placement')
+ChairPlacement,@JsonValue('HOD-CSE')
+HODCSE,@JsonValue('HOD-ECE')
+HODECE,@JsonValue('HOD-ME')
+HODME,@JsonValue('HOD-Design')
+HODDesign,@JsonValue('HOD-NS')
+HODNS,@JsonValue('Cultural Counsellor')
+CulturalCounsellor,@JsonValue('Technical Counsellor')
+TechnicalCounsellor,@JsonValue('Head TT')
+HeadTT,@JsonValue('Head Counseling Service')
+HeadCounselingService,}
 enum Building {
   @JsonValue('Computer Center')
   CC,
@@ -51,7 +68,7 @@ class Instructor {
   String email;
   String tilda;
   String phone;
-  String post;
+  List<Tag> tags;
 
   Instructor({
     this.name,
@@ -62,8 +79,8 @@ class Instructor {
     this.email,
     this.tilda,
     this.phone,
-    this.post,
-  }); // If any
+    this.tags,
+  });
 
   factory Instructor.fromJson(Map<String, dynamic> json) =>
       _$InstructorFromJson(json);
