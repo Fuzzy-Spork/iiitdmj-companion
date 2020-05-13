@@ -30,7 +30,7 @@ Map<String, dynamic> _$CourseToJson(Course instance) => <String, dynamic>{
       'group': instance.group,
       'lab': instance.lab,
       'branch': instance.branch,
-  'credits': instance.credits,
+      'credits': instance.credits,
     };
 
 T _$enumDecode<T>(
