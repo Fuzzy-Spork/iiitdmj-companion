@@ -14,13 +14,19 @@ enum Semester {
   @JsonValue('Odd')
   odd,
 }
+enum Year {
+@JsonValue('First')
+first,@JsonValue('Second')
+second,@JsonValue('Third')
+third,@JsonValue('Fourth')
+fourth,}
 
 @JsonSerializable()
 class Course {
   String name;
   String code;
   List<String> instructors;
-  String year;
+  Year year;
   Semester sem;
   bool group;
   bool lab;
