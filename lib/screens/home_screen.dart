@@ -17,13 +17,14 @@ class _LoginScreenState extends State<LoginScreen> {
       initialData: StorageService(),
       future: StorageService.getInstance(),
       builder: (context, AsyncSnapshot<StorageService> snapshot) {
-        print(snapshot);
-        print('\n\n\n\n\n\n\n\n\n\n');
-        if (snapshot.hasError) {
-          print('error');
-          return Center(child: CircularProgressIndicator());
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            snapshot.hasError ||
+            !snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
-        if (snapshot.hasData) {
+        try {
           return Scaffold(
             body: Center(
               child: Column(
@@ -68,10 +69,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           );
+        } catch (e) {
+          return Center(child: CircularProgressIndicator());
         }
-        return Center(child: CircularProgressIndicator());
       },
-    ) ??
-        CircularProgressIndicator();
+    );
   }
 }

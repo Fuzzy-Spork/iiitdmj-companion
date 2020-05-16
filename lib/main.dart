@@ -49,23 +49,25 @@ class _LandingPageState extends State<LandingPage> {
         } else {
           if (snapshot.hasData) {
             try {
-            if (snapshot.data.userInDB == null) {
-              print('new user');
+              if (snapshot.data.userInDB == null) {
+                print('new user');
+                return UserSignUpScreen(
+                  title: 'User Sign Up',
+                );
+              } else {
+                //TODO: Implement User Logged In Home
+                return LoginScreen();
+              }
+            } catch (e) {
+              print('Error: $e');
               return UserSignUpScreen(
                 title: 'User Sign Up',
               );
-            } else {
-              //TODO: Implement User Logged In Home
-              return LoginScreen();
-            }
-          } catch (e) {
-            print('Error: $e');
-            return UserSignUpScreen(
-              title: 'User Sign Up',
-            );
             }
           } else {
-            return Center(child: CircularProgressIndicator(),);
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }
         }
       },
