@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/screens/home_screen.dart';
+import 'package:iiitdmjcompanion/screens/login_screen.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
 
 //Use Future builder to access database to access app database
@@ -42,43 +43,30 @@ class _LandingPageState extends State<LandingPage> {
     return FutureBuilder(
       future: StorageService.getInstance(),
       builder: (context, AsyncSnapshot<StorageService> snapshot) {
-        if (snapshot.hasError) {
+        if (snapshot.hasError || !snapshot.hasData) {
           print('error');
           return Center(child: CircularProgressIndicator());
         } else {
-          try {
-            if (snapshot.data.userInDB == null) {
-              print('new user');
-              return UserSignUp(
+          if (snapshot.hasData) {
+            try {
+              if (snapshot.data.userInDB == null) {
+                print('new user');
+                return UserSignUpScreen(
+                  title: 'User Sign Up',
+                );
+              } else {
+                //TODO: Implement User Logged In Home
+                return LoginScreen();
+              }
+            } catch (e) {
+              print('Error: $e');
+              return UserSignUpScreen(
                 title: 'User Sign Up',
               );
-            } else {
-              //TODO: Implement User Logged In Home
-              return Scaffold(
-                body: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(snapshot.data.userInDB.name),
-                      FlatButton(
-                          color: Colors.blue,
-                          child: Text(
-                            'Sign Out',
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              snapshot.data.deleteKey(StorageService.UserKey);
-                            });
-                          }),
-                    ],
-                  ),
-                ),
-              );
             }
-          } catch (e) {
-            print('Error: $e');
-            return UserSignUp(
-              title: 'User Sign Up',
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
             );
           }
         }
