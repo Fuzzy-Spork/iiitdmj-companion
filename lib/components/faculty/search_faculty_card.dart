@@ -21,7 +21,7 @@ class _SearchFacultyCardState extends State<SearchFacultyCard> {
   Widget build(BuildContext context) {
     
     var horizVal = displaySafeWidthBlocks(context);
-    var vertVal = displaySafeHeightBlocks(context);
+    //var vertVal = displaySafeHeightBlocks(context);
     return GestureDetector(
       onTap: () {
         setState(() {

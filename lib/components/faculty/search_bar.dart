@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/services/size_config.dart';
 
 import '../../models/instructor/instructor.dart';
-import '../../models/instructor/instructor.dart';
-import '../../models/instructor/instructor.dart';
-import '../../models/instructor/instructor.dart';
-import '../../models/instructor/instructor.dart';
 import 'search_faculty_card.dart';
 
 class SearchBar extends StatefulWidget {
@@ -97,7 +93,7 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     var horizVal = displaySafeWidthBlocks(context);
-    var vertVal = displaySafeHeightBlocks(context);
+    //var vertVal = displaySafeHeightBlocks(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xff24252A),
