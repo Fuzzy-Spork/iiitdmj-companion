@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../models/instructor/instructor.dart';
 import 'faculty_detailed_card.dart';
 import 'package:iiitdmjcompanion/services/size_config.dart';
 
 class SearchFacultyCard extends StatefulWidget {
   SearchFacultyCard({
-    @required this.text,
+    @required this.instructor,
     @required this.icon,
-    @required this.desc,
   });
-  final String text;
   final String icon;
-  final String desc;
+  final Instructor instructor;
 
   @override
   _SearchFacultyCardState createState() => _SearchFacultyCardState();
@@ -52,7 +51,7 @@ class _SearchFacultyCardState extends State<SearchFacultyCard> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
                     Text(
-                      widget.text,
+                      widget.instructor.name,
                       style: TextStyle(
                           fontSize: horizVal * 4.3,
                           color: Colors.white,
@@ -62,7 +61,8 @@ class _SearchFacultyCardState extends State<SearchFacultyCard> {
                       height: 2.0,
                     ),
                     Text(
-                      widget.desc,
+                      Instructor.designationEnumMap[
+                                    widget.instructor.designation],
                       style: TextStyle(
                           fontSize: horizVal * 4,
                           color: Colors.white,

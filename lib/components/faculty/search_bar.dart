@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:iiitdmjcompanion/components/faculty/faculty_list.dart';
 import 'package:iiitdmjcompanion/services/size_config.dart';
 
 import '../../models/instructor/instructor.dart';
 import '../../models/instructor/instructor.dart';
 import '../../models/instructor/instructor.dart';
-import 'faculty_detailed_card.dart';
+import '../../models/instructor/instructor.dart';
+import '../../models/instructor/instructor.dart';
 import 'search_faculty_card.dart';
 
 class SearchBar extends StatefulWidget {
@@ -19,13 +19,17 @@ class _SearchBarState extends State<SearchBar> {
   bool isLoading;
   var duplicateItems = List<String>();
   var items = List<String>();
-  List<Instructor> faculty = [];
+  List<Instructor> allFaculty = [];
+  var facultyMap = {};
+
   @override
   void initState() {
-    getFacultyData();
-    duplicateItems.addAll(facultyList.keys);
-    print(duplicateItems);
-    items.addAll(duplicateItems);
+    getFacultyData().then((value) {
+      for (var ins in allFaculty) {
+        duplicateItems.add(ins.name);
+      }
+      items.addAll(duplicateItems);
+    });
     super.initState();
   }
 
@@ -35,21 +39,29 @@ class _SearchBarState extends State<SearchBar> {
     QuerySnapshot snap = await db.getDocuments();
 
     for (var doc in snap.documents) {
-      faculty.add(Instructor.instructorFromSnapshot(doc));
+      allFaculty.add(Instructor.instructorFromSnapshot(doc));
     }
     setState(() {
       isLoading = false;
     });
+    facultyMap = {
+      for (var instructor in allFaculty)
+        instructor: SearchFacultyCard(
+          instructor: instructor,
+          icon: 'assets/download.png',
+        )
+    };
   }
 
   void filterSearchResults(String query) {
     List<String> dummySearchList = List<String>();
     dummySearchList.addAll(duplicateItems);
+    query.toLowerCase();
     if (query.isNotEmpty) {
       List<String> dummyListData = List<String>();
       dummySearchList.forEach((item) {
-        print('Input Item: $item\n');
-        if (item.toLowerCase().contains(query.toLowerCase())) {
+        Instructor ins = Instructor.instructorFromName(item, allFaculty);
+        if (item.toLowerCase().contains(query)) {
           dummyListData.add(item);
         }
       });
@@ -115,23 +127,18 @@ class _SearchBarState extends State<SearchBar> {
                 ),
               ),
               Expanded(
-                child: (isLoading == true||faculty.length == 0)
+                child: (isLoading == true || allFaculty.length == 0)
                     ? Center(
                         child: CircularProgressIndicator(),
                       )
                     : ListView.builder(
                         shrinkWrap: true,
-                        itemCount: faculty.length,
+                        itemCount: items.length,
                         itemBuilder: (context, index) {
-                          if (faculty.length != 0) {
+                          if (facultyMap.keys.length != 0) {
                             return ListTile(
-                              title: SearchFacultyCard(
-                                icon: 'assets/download.png',
-                                desc: Instructor.designationEnumMap[
-                                    faculty[index].designation],
-                                text: faculty[index].name,
-                              ),
-                            );
+                                title: facultyMap[Instructor.instructorFromName(
+                                    items[index], allFaculty)]);
                           }
                           return Container();
                         },
