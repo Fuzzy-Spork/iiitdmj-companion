@@ -175,4 +175,19 @@ class Instructor {
     Tag.Warden_H3: 'Warden - Hall 3',
     Tag.Warden_PGHostel: 'Warden - PG Hostel',
   };
+  static const departmentEnumMap = {
+  Department.CSE: 'CSE',
+  Department.ECE: 'ECE',
+  Department.Design: 'Design',
+  Department.ME: 'ME',
+  Department.NS: 'NS',
+};
+
+static const buildingEnumMap = {
+  Building.CC: 'Computer Center',
+  Building.LHTC: 'LHTC',
+  Building.CLC: 'Core Lab Complex',
+  Building.Acad: 'Academic Block',
+  Building.Bank: 'Near Bank',
+};
 }
