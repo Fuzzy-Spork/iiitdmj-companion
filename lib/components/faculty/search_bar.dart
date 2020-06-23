@@ -27,7 +27,11 @@ class _SearchBarState extends State<SearchBar> {
     if (query.isNotEmpty) {
       List<String> dummyListData = List<String>();
       dummySearchList.forEach((item) {
-        if (item.contains(query)) {
+        print('Input Item: $item\n');
+        if (item.toLowerCase().contains(query.toLowerCase())) {
+          print('Query: $query\n');
+          print('item: $item\n');
+          print(item.contains('g'));
           dummyListData.add(item);
         }
       });
