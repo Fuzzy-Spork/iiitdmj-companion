@@ -19,15 +19,13 @@ class _DashBoardState extends State<DashBoard> {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  setState(() {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => FacultySearchScreen()));
-                  });
                 },
                 child: Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: EdgeInsets.all(15.0),
                   child: NewDashboardCard(
                     icon: FontAwesomeIcons.cookie,
                     text: 'FACULTY',

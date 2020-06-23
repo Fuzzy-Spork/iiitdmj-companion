@@ -2,7 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/services/size_config.dart';
 
+import '../../models/instructor/instructor.dart';
+import '../../models/instructor/instructor.dart';
+
 class FacultyCard extends StatefulWidget {
+  Instructor instructor;
+  FacultyCard({instructor});
   @override
   _FacultyCardState createState() => _FacultyCardState();
 }

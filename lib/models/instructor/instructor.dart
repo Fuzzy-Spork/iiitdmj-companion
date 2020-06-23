@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'instructor.g.dart';
@@ -98,4 +99,17 @@ class Instructor {
       _$InstructorFromJson(json);
 
   Map<String, dynamic> toJson() => _$InstructorToJson(this);
+
+
+  static instructorFromSnapshot(DocumentSnapshot snap){
+    return Instructor.fromJson(snap.data);
+  }
+
+
+  static const designationEnumMap = {
+  Designation.Assistant: 'Assistant Professor',
+  Designation.Associate: 'Associate Professor',
+  Designation.Professor: 'Professor',
+};
+
 }

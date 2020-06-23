@@ -1,6 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/components/faculty/faculty_list.dart';
 import 'package:iiitdmjcompanion/services/size_config.dart';
+
+import '../../models/instructor/instructor.dart';
+import '../../models/instructor/instructor.dart';
+import '../../models/instructor/instructor.dart';
+import 'faculty_detailed_card.dart';
+import 'search_faculty_card.dart';
 
 class SearchBar extends StatefulWidget {
   @override
@@ -9,16 +16,30 @@ class SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<SearchBar> {
   TextEditingController editingController = TextEditingController();
-
+  bool isLoading;
   var duplicateItems = List<String>();
   var items = List<String>();
-
+  List<Instructor> faculty = [];
   @override
   void initState() {
+    getFacultyData();
     duplicateItems.addAll(facultyList.keys);
     print(duplicateItems);
     items.addAll(duplicateItems);
     super.initState();
+  }
+
+  Future getFacultyData() async {
+    //isLoading = true;
+    CollectionReference db = Firestore.instance.collection('Faculty');
+    QuerySnapshot snap = await db.getDocuments();
+
+    for (var doc in snap.documents) {
+      faculty.add(Instructor.instructorFromSnapshot(doc));
+    }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   void filterSearchResults(String query) {
@@ -29,9 +50,6 @@ class _SearchBarState extends State<SearchBar> {
       dummySearchList.forEach((item) {
         print('Input Item: $item\n');
         if (item.toLowerCase().contains(query.toLowerCase())) {
-          print('Query: $query\n');
-          print('item: $item\n');
-          print(item.contains('g'));
           dummyListData.add(item);
         }
       });
@@ -97,13 +115,27 @@ class _SearchBarState extends State<SearchBar> {
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(title: facultyList[items[index]]);
-                  },
-                ),
+                child: (isLoading == true||faculty.length == 0)
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: faculty.length,
+                        itemBuilder: (context, index) {
+                          if (faculty.length != 0) {
+                            return ListTile(
+                              title: SearchFacultyCard(
+                                icon: 'assets/download.png',
+                                desc: Instructor.designationEnumMap[
+                                    faculty[index].designation],
+                                text: faculty[index].name,
+                              ),
+                            );
+                          }
+                          return Container();
+                        },
+                      ),
               ),
             ],
           ),
