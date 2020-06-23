@@ -1,7 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../components/faculty/search_bar.dart';
-import '../models/instructor/instructor.dart';
 
 class FacultySearchScreen extends StatefulWidget {
   FacultySearchScreen({Key key}) : super(key: key);
