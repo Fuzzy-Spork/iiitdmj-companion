@@ -76,7 +76,9 @@ class _SearchBarState extends State<SearchBar> {
             }
           }
         }
-        
+        if(ins.code.toLowerCase().contains(query)){
+          dummyListData.add(item);
+        }
         
       });
       setState(() {
