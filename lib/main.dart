@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:iiitdmjcompanion/screens/home_screen.dart';
 import 'package:iiitdmjcompanion/screens/login_screen.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
+import 'screens/dashboard.dart';
 
 //Use Future builder to access database to access app database
 void main() {
@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primaryColor: Color(0xff24252A),
@@ -56,7 +57,7 @@ class _LandingPageState extends State<LandingPage> {
                 );
               } else {
                 //TODO: Implement User Logged In Home
-                return LoginScreen();
+                return DashBoard();
               }
             } catch (e) {
               print('Error: $e');
