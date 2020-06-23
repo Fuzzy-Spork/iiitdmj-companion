@@ -69,6 +69,14 @@ class _SearchBarState extends State<SearchBar> {
             .contains(query)) {
           dummyListData.add(item);
         }
+        if (ins.tags != null) {
+          for (Tag tag in ins.tags) {
+            if ((Instructor.tagEnumMap[tag]).toLowerCase().contains(query)) {
+              dummyListData.add(item);
+            }
+          }
+        }
+        
         
       });
       setState(() {
