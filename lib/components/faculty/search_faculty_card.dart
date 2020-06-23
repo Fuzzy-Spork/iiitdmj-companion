@@ -19,13 +19,14 @@ class SearchFacultyCard extends StatefulWidget {
 class _SearchFacultyCardState extends State<SearchFacultyCard> {
   @override
   Widget build(BuildContext context) {
+    
     var horizVal = displaySafeWidthBlocks(context);
     var vertVal = displaySafeHeightBlocks(context);
     return GestureDetector(
       onTap: () {
         setState(() {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => FacultyCard()));
+              context, MaterialPageRoute(builder: (context) => FacultyCard(instructor: widget.instructor,)));
         });
       },
       child: Container(
