@@ -9,7 +9,7 @@ part of 'class.dart';
 Class _$ClassFromJson(Map<String, dynamic> json) {
   return Class(
     course: json['course'] as String,
-    day: json['day'] as String,
+    day: _$enumDecodeNullable(_$DayEnumMap, json['day']),
     timeStart: json['timeStart'] as int,
     timeEnd: json['timeEnd'] as int,
     venue: _$enumDecodeNullable(_$VenueEnumMap, json['venue']),
@@ -19,17 +19,18 @@ Class _$ClassFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$ClassToJson(Class instance) => <String, dynamic>{
       'course': instance.course,
-  'group': _$GroupEnumMap[instance.group],
-      'day': instance.day,
-  'timeStart': instance.timeStart,
-  'timeEnd': instance.timeEnd,
-  'venue': _$VenueEnumMap[instance.venue],
-};
+      'group': _$GroupEnumMap[instance.group],
+      'day': _$DayEnumMap[instance.day],
+      'timeStart': instance.timeStart,
+      'timeEnd': instance.timeEnd,
+      'venue': _$VenueEnumMap[instance.venue],
+    };
 
-T _$enumDecode<T>(Map<T, dynamic> enumValues,
-    dynamic source, {
-      T unknownValue,
-    }) {
+T _$enumDecode<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
   if (source == null) {
     throw ArgumentError('A value must be provided. Supported values: '
         '${enumValues.values.join(', ')}');
@@ -46,15 +47,26 @@ T _$enumDecode<T>(Map<T, dynamic> enumValues,
   return value ?? unknownValue;
 }
 
-T _$enumDecodeNullable<T>(Map<T, dynamic> enumValues,
-    dynamic source, {
-      T unknownValue,
-    }) {
+T _$enumDecodeNullable<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
   if (source == null) {
     return null;
   }
   return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
 }
+
+const _$DayEnumMap = {
+  Day.Monday: 'Monday',
+  Day.Tuesday: 'Tuesday',
+  Day.Wednesday: 'Wednesday',
+  Day.Thursday: 'Thursday',
+  Day.Friday: 'Friday',
+  Day.Saturday: 'Saturday',
+  Day.Sunday: 'Sunday',
+};
 
 const _$VenueEnumMap = {
   Venue.L102: 'L102',

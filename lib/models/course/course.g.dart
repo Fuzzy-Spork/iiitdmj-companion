@@ -25,7 +25,7 @@ Map<String, dynamic> _$CourseToJson(Course instance) => <String, dynamic>{
       'name': instance.name,
       'code': instance.code,
       'instructors': instance.instructors,
-  'year': _$YearEnumMap[instance.year],
+      'year': _$YearEnumMap[instance.year],
       'sem': _$SemesterEnumMap[instance.sem],
       'group': instance.group,
       'lab': instance.lab,
