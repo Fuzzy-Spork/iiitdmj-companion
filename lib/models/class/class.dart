@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:iiitdmjcompanion/services/storage_service.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'class.g.dart';
@@ -24,6 +26,8 @@ enum Day {
   @JsonValue('Sunday')
   Sunday,
 }
+
+
 
 enum Venue {
   @JsonValue('L102')
@@ -113,4 +117,37 @@ class Class {
   factory Class.fromJson(Map<String, dynamic> json) => _$ClassFromJson(json);
 
   Map<String, dynamic> toJson() => _$ClassToJson(this);
+
+  static Future<List<Class>> getUserClassesToday()async {
+    //DateTime today = DateTime.now();
+    DateTime today = DateTime.now();
+    List<Class> userClasses = List<Class>();
+    var day = dayEnumMap[dayIntMap[today.weekday]];
+    var classes =  await Firestore.instance.collection('Classes').getDocuments();
+    for(var classs in classes.documents){
+      userClasses.add(Class.fromJson(classs.data));
+    }
+    print(userClasses[0].course);
+  }
+  // static bool isUsers(Class k){
+  //   var user = StorageService.
+  // }
+  static const  Map<int, Day> dayIntMap = {
+    1 : Day.Monday,
+    2: Day.Tuesday,
+    3: Day.Wednesday,
+    4: Day.Thursday,
+    5: Day.Friday,
+    6: Day.Saturday,
+    7: Day.Sunday,
+  };
+  static const dayEnumMap = {
+  Day.Monday: 'Monday',
+  Day.Tuesday: 'Tuesday',
+  Day.Wednesday: 'Wednesday',
+  Day.Thursday: 'Thursday',
+  Day.Friday: 'Friday',
+  Day.Saturday: 'Saturday',
+  Day.Sunday: 'Sunday',
+};
 }
