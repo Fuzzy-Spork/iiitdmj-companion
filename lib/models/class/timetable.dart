@@ -3,7 +3,7 @@ import 'class.dart';
 List<Class> classes = [
   Class(
     course: 'NS103',
-    day: 'Monday',
+    day: Day.Monday,
     timeStart: 9,
     timeEnd: 10,
     group: Group.A,
@@ -11,7 +11,7 @@ List<Class> classes = [
   ),
   Class(
     course: 'NS103',
-    day: 'Monday',
+    day: Day.Monday,
     timeStart: 11,
     timeEnd: 12,
     group: Group.B,
@@ -19,7 +19,7 @@ List<Class> classes = [
   ),
   Class(
     course: 'NS104',
-    day: 'Monday',
+    day: Day.Monday,
     timeStart: 9,
     timeEnd: 10,
     group: Group.B,
@@ -27,7 +27,7 @@ List<Class> classes = [
   ),
   Class(
     course: 'NS104',
-    day: 'Monday',
+    day: Day.Monday,
     timeStart: 11,
     timeEnd: 12,
     group: Group.A,
@@ -35,7 +35,7 @@ List<Class> classes = [
   ),
   Class(
     course: 'ES103',
-    day: 'Monday',
+    day: Day.Monday,
     timeStart: 10,
     timeEnd: 11,
     group: Group.A,
@@ -43,7 +43,7 @@ List<Class> classes = [
   ),
   Class(
     course: 'ES103',
-    day: 'Monday',
+    day: Day.Monday,
     timeStart: 12,
     timeEnd: 1,
     group: Group.B,
@@ -51,7 +51,7 @@ List<Class> classes = [
   ),
   Class(
     course: 'HS102',
-    day: 'Monday',
+    day: Day.Monday,
     timeStart: 10,
     timeEnd: 11,
     group: Group.A,
@@ -59,7 +59,7 @@ List<Class> classes = [
   ),
   Class(
     course: 'HS102',
-    day: 'Monday',
+    day: Day.Monday,
     timeStart: 12,
     timeEnd: 1,
     group: Group.B,
