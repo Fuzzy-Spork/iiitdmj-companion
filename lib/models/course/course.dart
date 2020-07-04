@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'course.g.dart';
@@ -15,11 +16,15 @@ enum Semester {
   odd,
 }
 enum Year {
-@JsonValue('First')
-first,@JsonValue('Second')
-second,@JsonValue('Third')
-third,@JsonValue('Fourth')
-fourth,}
+  @JsonValue('First')
+  first,
+  @JsonValue('Second')
+  second,
+  @JsonValue('Third')
+  third,
+  @JsonValue('Fourth')
+  fourth,
+}
 
 @JsonSerializable()
 class Course {
@@ -48,6 +53,11 @@ class Course {
   factory Course.fromJson(Map<String, dynamic> json) => _$CourseFromJson(json);
 
   Map<String, dynamic> toJson() => _$CourseToJson(this);
+
+  static Future<Course> courseFromName(String name) async {
+    DocumentSnapshot doc= await Firestore.instance.collection('Courses').document(name).get();
+    return Course.fromJson(doc.data);
+  }
 }
 
 const SemesterEnumMap = {

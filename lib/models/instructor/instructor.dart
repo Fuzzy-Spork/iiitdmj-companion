@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'instructors_list.dart';
-import 'instructors_list.dart';
+
 
 part 'instructor.g.dart';
 

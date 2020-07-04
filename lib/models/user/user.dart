@@ -1,3 +1,5 @@
+import 'package:iiitdmjcompanion/models/class/class.dart';
+import 'package:iiitdmjcompanion/models/course/course.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user.g.dart';
@@ -16,23 +18,6 @@ enum Branch {
   ME,
   @JsonValue('Design')
   Design,
-}
-
-enum Year {
-  @JsonValue('First')
-  first,
-  @JsonValue('Second')
-  second,
-  @JsonValue('Third')
-  third,
-  @JsonValue('Fourth')
-  fourth,
-}
-enum Group {
-  @JsonValue('A')
-  A,
-  @JsonValue('B')
-  B,
 }
 
 @JsonSerializable()

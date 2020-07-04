@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/components/dashboard_card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:iiitdmjcompanion/models/class/class.dart';
+
 import 'faculty_search_screen.dart';
 
 class DashBoard extends StatefulWidget {
@@ -15,11 +15,6 @@ class _DashBoardState extends State<DashBoard> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: (){
-            Class.getUserClassesToday();
-          },
-        ),
         backgroundColor: Color(0xff24252A),
         body: ListView(
           children: <Widget>[

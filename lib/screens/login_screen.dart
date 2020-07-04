@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iiitdmjcompanion/main.dart';
+import 'package:iiitdmjcompanion/models/class/class.dart';
 import 'package:iiitdmjcompanion/models/user/user.dart';
 import 'package:iiitdmjcompanion/services/size_config.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
