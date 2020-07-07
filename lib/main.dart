@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iiitdmjcompanion/screens/dashboard_sample.dart';
+import 'package:iiitdmjcompanion/screens/dashboard.dart';
 import 'package:iiitdmjcompanion/screens/login_screen.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
 
