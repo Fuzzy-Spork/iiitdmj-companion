@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:iiitdmjcompanion/screens/dashboard_sample.dart';
 import 'package:iiitdmjcompanion/screens/login_screen.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
-import 'screens/dashboard.dart';
 
 //Use Future builder to access database to access app database
 void main() {
@@ -15,19 +15,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: Color(0xff24252A),
-        backgroundColor: Color(0xff24252A),
-        fontFamily: 'code-bold',
-        textTheme: TextTheme(
-          headline1: TextStyle(
-            fontSize: 40.0,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-          headline6: TextStyle(fontSize: 24.0, fontStyle: FontStyle.italic),
-          bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
-        ),
-      ),
+          scaffoldBackgroundColor: Colors.white,
+          fontFamily: 'gilroy',
+          textTheme: TextTheme()),
       home: LandingPage(),
     );
   }
@@ -56,7 +46,6 @@ class _LandingPageState extends State<LandingPage> {
                   title: 'User Sign Up',
                 );
               } else {
-                //TODO: Complete DashBoard
                 return DashBoard();
               }
             } catch (e) {

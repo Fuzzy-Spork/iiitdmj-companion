@@ -14,7 +14,7 @@ description: Companion App For IIITDMJ
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.3.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -33,9 +33,8 @@ dependencies:
   weather_icons: ^2.0.1
   path_provider: ^1.6.8
   device_info: ^0.4.2+4
-  rounded_loading_button: ^1.0.5
+  rounded_loading_button: ^1.0.8
   adobe_xd: ^0.1.3
-  flutter_svg: ^0.17.4
 
 
 
@@ -73,11 +72,15 @@ flutter:
     - family: code-bold
       fonts:
         - asset: fonts/CODE-Bold.otf
-
-
     - family: code-light
       fonts:
         - asset: fonts/CODE-Light.otf
+    - family: gilroy
+      fonts:
+        - asset: fonts/Gilroy-Light.otf
+          weight: 300
+        - asset: fonts/Gilroy-ExtraBold.otf
+          weight: 900
 
 
 

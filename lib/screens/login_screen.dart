@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:iiitdmjcompanion/constants.dart';
 import 'package:iiitdmjcompanion/main.dart';
+import 'package:iiitdmjcompanion/models/class/class.dart';
 import 'package:iiitdmjcompanion/models/user/user.dart';
 import 'package:iiitdmjcompanion/services/size_config.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
@@ -85,11 +87,13 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
     return Theme(
       data: ThemeData(
         unselectedWidgetColor: Colors.white,
+        primaryColor: Colors.white,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Radio<Group>(
+            activeColor: Colors.white,
             value: Group.A,
             groupValue: selectedGroup,
             onChanged: (Group value) {
@@ -106,6 +110,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
             width: 10.0,
           ),
           Radio<Group>(
+            activeColor: Colors.white,
             value: Group.B,
             groupValue: selectedGroup,
             onChanged: (Group value) {
@@ -130,9 +135,9 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
   Widget build(BuildContext context) {
     var horizVal = displaySafeWidthBlocks(context);
     var vertVal = displaySafeHeightBlocks(context);
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        color: Theme.of(context).backgroundColor,
         child: SafeArea(
           child: Center(
             child: ListView(
@@ -141,8 +146,13 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                   height: vertVal * 20,
                 ),
                 Text(
-                  'IIITDMJ\nOfficial App',
-                  style: Theme.of(context).textTheme.headline1,
+                  'IIITDMJ\nCOMPANION',
+                  style: TextStyle(
+                    fontSize: size.height * 0.05,
+                    color: Colors.white,
+                    fontFamily: 'gilroy',
+                    fontWeight: FontWeight.w900,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
@@ -182,6 +192,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                               child: TextField(
                                 style: TextStyle(
                                   fontSize: 24,
+                                  fontFamily: 'gilroy',
                                   color: Colors.white,
                                 ),
                                 onChanged: (typed) {
@@ -189,11 +200,11 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                                   print(name);
                                 },
                                 decoration: InputDecoration(
-                                  labelText: 'name',
+                                  labelText: 'Name',
                                   labelStyle: TextStyle(
                                     color: Colors.white70,
                                     fontSize: 15,
-                                    fontFamily: 'code-bold',
+                                    fontFamily: 'gilroy',
                                   ),
                                   border: InputBorder.none,
                                 ),
@@ -302,16 +313,19 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                 Center(
                   child: groupRadio(),
                 ),
+                SizedBox(
+                  height: size.height * 0.03,
+                ),
                 RoundedLoadingButton(
                   controller: _btnController,
-                  color: Colors.black,
-                  child: Text(
-                    'Get Started',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline1
-                        .copyWith(fontSize: 20),
-                  ),
+                  color: Colors.white,
+                  child: Text('Get Started',
+                      style: TextStyle(
+                        fontSize: size.height * 0.025,
+                        fontFamily: 'gilroy',
+                        fontWeight: FontWeight.w900,
+                        color: kBackgroundColor,
+                      )),
                   onPressed: () async {
                     var storageService = await StorageService.getInstance();
                     _btnController.start();

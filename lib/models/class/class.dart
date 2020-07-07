@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:iiitdmjcompanion/models/course/course.dart';
+import 'package:iiitdmjcompanion/services/storage_service.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'class.g.dart';
@@ -113,4 +116,57 @@ class Class {
   factory Class.fromJson(Map<String, dynamic> json) => _$ClassFromJson(json);
 
   Map<String, dynamic> toJson() => _$ClassToJson(this);
+
+  static Future<List<Class>> getUserClassesToday() async {
+    //TODO: Uncomment this
+    //DateTime today = DateTime.now();
+    List<Class> userClasses = List<Class>();
+    //TODO: Uncomment this
+    //var day = dayIntMap[today.weekday];
+    var day = Day.Monday;
+    var classes = await Firestore.instance.collection('Classes').getDocuments();
+    for (var classs in classes.documents) {
+      var c = Class.fromJson(classs.data);
+      var isUser = await isUsers(Class.fromJson(classs.data));
+      if (isUser && c.day == day) {
+        userClasses.add(Class.fromJson(classs.data));
+      }
+    }
+    print(userClasses.first.course);
+    userClasses.sort((a, b)=> a.timeStart.compareTo(b.timeStart));
+    return userClasses;
+  }
+
+  sort(Class a, Class b){
+
+  }
+
+  static Future<bool> isUsers(Class k) async {
+    var user = await StorageService.getInstance();
+    var course = await Course.courseFromName(k.course);
+    if (course.year == user.userInDB.year && k.group == user.userInDB.group) {
+      print(course.year);
+      return true;
+    } else
+      return false;
+  }
+
+  static const Map<int, Day> dayIntMap = {
+    1: Day.Monday,
+    2: Day.Tuesday,
+    3: Day.Wednesday,
+    4: Day.Thursday,
+    5: Day.Friday,
+    6: Day.Saturday,
+    7: Day.Sunday,
+  };
+  static const dayEnumMap = {
+    Day.Monday: 'Monday',
+    Day.Tuesday: 'Tuesday',
+    Day.Wednesday: 'Wednesday',
+    Day.Thursday: 'Thursday',
+    Day.Friday: 'Friday',
+    Day.Saturday: 'Saturday',
+    Day.Sunday: 'Sunday',
+  };
 }
