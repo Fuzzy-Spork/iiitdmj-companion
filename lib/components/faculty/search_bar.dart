@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/services/size_config.dart';
-
+import '../../constants.dart';
 import '../../models/instructor/instructor.dart';
 import 'search_faculty_card.dart';
 
@@ -17,6 +17,9 @@ class _SearchBarState extends State<SearchBar> {
   var items = List<String>();
   List<Instructor> allFaculty = [];
   var facultyMap = {};
+
+  bool searchBarVisible = false;
+  bool navigationButtonVisible = true;
 
   @override
   void initState() {
@@ -72,10 +75,9 @@ class _SearchBarState extends State<SearchBar> {
             }
           }
         }
-        if(ins.code.toLowerCase().contains(query)){
+        if (ins.code.toLowerCase().contains(query)) {
           dummyListData.add(item);
         }
-        
       });
       setState(() {
         items.clear();
@@ -93,47 +95,131 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     var horizVal = displaySafeWidthBlocks(context);
-    //var vertVal = displaySafeHeightBlocks(context);
+    var vertVal = displaySafeHeightBlocks(context);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xff24252A),
         body: Container(
           child: Column(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  onChanged: (value) {
-                    filterSearchResults(value);
-                  },
-                  style: TextStyle(
-                    color: Colors.white,
+              Visibility(
+                visible: navigationButtonVisible,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 0, right: 0, top: 5),
+                  child: Container(
+                    height: vertVal * 10,
+                    width: (horizVal * 100),
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              Navigator.pop(context);
+                            });
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                              color: kIconColor,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              searchBarVisible = true;
+                              navigationButtonVisible = false;
+                            });
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            child: Icon(
+                              Icons.search,
+                              color: kIconColor,
+                              size: 30,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  showCursor: false,
-                  controller: editingController,
-                  decoration: InputDecoration(
-                    filled: false,
-                    labelText: "Search",
-                    labelStyle: TextStyle(color: Colors.white),
-                    hintText: "Search",
-                    hintStyle: TextStyle(color: Colors.white70),
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Colors.white,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(horizVal * 16)),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white, width: 1.0),
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(horizVal * 16)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white, width: 2.0),
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(horizVal * 16)),
+                ),
+              ),
+              Visibility(
+                visible: searchBarVisible,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 2, right: 15, top: 5),
+                  child: Container(
+                    height: vertVal * 10,
+                    width: (horizVal * 100) - 17,
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              searchBarVisible = false;
+                              navigationButtonVisible = true;
+                            });
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            child: Icon(
+                              Icons.clear,
+                              color: kIconColor,
+                              size: 27,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 55,
+                            decoration: BoxDecoration(
+                                border: Border(
+                                  right: BorderSide(
+                                    color: kBackgroundColor,
+                                    width: 1,
+                                  ),
+                                  left: BorderSide(
+                                    color: kBackgroundColor,
+                                    width: 1,
+                                  ),
+                                  top: BorderSide(
+                                    color: kBackgroundColor,
+                                    width: 1,
+                                  ),
+                                  bottom: BorderSide(
+                                    color: kBackgroundColor,
+                                    width: 1,
+                                  ),
+                                ),
+                                borderRadius: BorderRadius.circular(35)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 5,
+                                top: 4,
+                                right: 5,
+                              ),
+                              child: TextField(
+                                autofocus: searchBarVisible,
+                                onChanged: (value) {
+                                  filterSearchResults(value);
+                                },
+                                style: TextStyle(
+                                  color: kTextColor,
+                                ),
+                                showCursor: false,
+                                controller: editingController,
+                                decoration: kSearchBarDecoration,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

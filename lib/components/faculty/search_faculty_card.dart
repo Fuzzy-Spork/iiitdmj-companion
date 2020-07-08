@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../constants.dart';
 import '../../models/instructor/instructor.dart';
 import 'faculty_detailed_card.dart';
 import 'package:iiitdmjcompanion/services/size_config.dart';
+import 'package:iiitdmjcompanion/constants.dart';
 
 class SearchFacultyCard extends StatefulWidget {
   SearchFacultyCard({
@@ -19,20 +21,23 @@ class SearchFacultyCard extends StatefulWidget {
 class _SearchFacultyCardState extends State<SearchFacultyCard> {
   @override
   Widget build(BuildContext context) {
-    
     var horizVal = displaySafeWidthBlocks(context);
     //var vertVal = displaySafeHeightBlocks(context);
     return GestureDetector(
       onTap: () {
         setState(() {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => FacultyCard(instructor: widget.instructor,)));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => FacultyCard(
+                        instructor: widget.instructor,
+                      )));
         });
       },
       child: Container(
         height: 60,
         decoration: BoxDecoration(
-          color: Color(0xff24252A),
+          color: Colors.white,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,21 +59,25 @@ class _SearchFacultyCardState extends State<SearchFacultyCard> {
                     Text(
                       widget.instructor.name,
                       style: TextStyle(
-                          fontSize: horizVal * 4.3,
-                          color: Colors.white,
-                          fontFamily: 'code-bold'),
+                        fontSize: horizVal * 4,
+                        color: kTextColor,
+                        fontFamily: 'code-light',
+                        letterSpacing: 1,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                     SizedBox(
                       height: 2.0,
                     ),
                     Text(
-                      Instructor.designationEnumMap[
-                                    widget.instructor.designation],
+                      Instructor
+                          .designationEnumMap[widget.instructor.designation],
                       style: TextStyle(
-                          fontSize: horizVal * 4,
-                          color: Colors.white,
-                          fontFamily: 'code-light',
-                          fontWeight: FontWeight.bold),
+                        fontSize: horizVal * 4,
+                        color: kTextColor,
+                        fontFamily: 'code-bold',
+                        fontWeight: FontWeight.w400,
+                      ),
                     )
                   ],
                 ),
