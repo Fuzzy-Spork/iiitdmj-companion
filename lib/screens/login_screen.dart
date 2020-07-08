@@ -9,6 +9,29 @@ import 'package:iiitdmjcompanion/services/size_config.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+import '../constants.dart';
+
 class UserSignUpScreen extends StatefulWidget {
   UserSignUpScreen({Key key, this.title}) : super(key: key);
 
@@ -35,7 +58,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
           branch,
           style: TextStyle(
             fontFamily: 'code-bold',
-            color: Colors.white,
+            color: kTextColor,
             fontSize: 20,
           ),
         ),
@@ -63,7 +86,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
           year,
           style: TextStyle(
             fontFamily: 'code-bold',
-            color: Colors.white,
+            color: kTextColor,
             fontSize: 20,
           ),
         ),
@@ -86,14 +109,15 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
   Theme groupRadio() {
     return Theme(
       data: ThemeData(
-        unselectedWidgetColor: Colors.white,
-        primaryColor: Colors.white,
+        unselectedWidgetColor: kBackgroundColor,
+        primaryColor: kBackgroundColor,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Radio<Group>(
-            activeColor: Colors.white,
+            focusColor: kBackgroundColor,
+            activeColor: kBackgroundColor,
             value: Group.A,
             groupValue: selectedGroup,
             onChanged: (Group value) {
@@ -104,13 +128,14 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
           ),
           Text(
             'Group A',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: kTextColor),
           ),
           SizedBox(
             width: 10.0,
           ),
           Radio<Group>(
-            activeColor: Colors.white,
+            focusColor: kBackgroundColor,
+            activeColor: kBackgroundColor,
             value: Group.B,
             groupValue: selectedGroup,
             onChanged: (Group value) {
@@ -121,7 +146,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
           ),
           Text(
             'Group B',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: kTextColor),
           ),
           SizedBox(
             width: 1.0,
@@ -149,7 +174,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                   'IIITDMJ\nCOMPANION',
                   style: TextStyle(
                     fontSize: size.height * 0.05,
-                    color: Colors.white,
+                    color: kTextColor,
                     fontFamily: 'gilroy',
                     fontWeight: FontWeight.w900,
                   ),
@@ -164,7 +189,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                     height: vertVal * 7,
                     decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(color: Colors.white60, width: 2),
+                        bottom: BorderSide(color: kBackgroundColor, width: 2),
                       ),
                     ),
                     child: IntrinsicHeight(
@@ -172,7 +197,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                         children: <Widget>[
                           Icon(
                             Icons.person,
-                            color: Colors.white,
+                            color: kIconColor,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
@@ -183,7 +208,8 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                               width: 1,
                               color: Colors.white,
                               child: VerticalDivider(
-                                color: Colors.white,
+                                thickness: 2,
+                                color: kBackgroundColor,
                               ),
                             ),
                           ),
@@ -193,7 +219,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                                 style: TextStyle(
                                   fontSize: 24,
                                   fontFamily: 'gilroy',
-                                  color: Colors.white,
+                                  color: kTextColor,
                                 ),
                                 onChanged: (typed) {
                                   name = typed;
@@ -202,7 +228,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                                 decoration: InputDecoration(
                                   labelText: 'Name',
                                   labelStyle: TextStyle(
-                                    color: Colors.white70,
+                                    color: kTextColor,
                                     fontSize: 15,
                                     fontFamily: 'gilroy',
                                   ),
@@ -220,7 +246,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                     height: vertVal * 7,
                     decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(color: Colors.white60, width: 2),
+                        bottom: BorderSide(color: kBackgroundColor, width: 2),
                       ),
                     ),
                     child: IntrinsicHeight(
@@ -228,7 +254,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                         children: <Widget>[
                           Icon(
                             FontAwesomeIcons.codeBranch,
-                            color: Colors.white,
+                            color: kIconColor,
                             size: 25,
                           ),
                           Padding(
@@ -240,13 +266,14 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                               width: 1,
                               color: Colors.white,
                               child: VerticalDivider(
-                                color: Colors.white,
+                                thickness: 2,
+                                color: kBackgroundColor,
                               ),
                             ),
                           ),
                           Theme(
                             data: Theme.of(context).copyWith(
-                              canvasColor: Color(0xff24252A),
+                              canvasColor: Colors.white,
                             ),
                             child: Container(
                               width: horizVal * 75,
@@ -268,7 +295,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                     height: vertVal * 7,
                     decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(color: Colors.white60, width: 2),
+                        bottom: BorderSide(color: kBackgroundColor, width: 2),
                       ),
                     ),
                     child: IntrinsicHeight(
@@ -276,7 +303,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                         children: <Widget>[
                           Icon(
                             FontAwesomeIcons.calendarTimes,
-                            color: Colors.white,
+                            color: kIconColor,
                             size: 25,
                           ),
                           Padding(
@@ -285,16 +312,17 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                               right: 15,
                             ),
                             child: Container(
-                              width: 1,
+                              width: 2,
                               color: Colors.white,
                               child: VerticalDivider(
-                                color: Colors.white,
+                                thickness: 2,
+                                color: kBackgroundColor,
                               ),
                             ),
                           ),
                           Theme(
                             data: Theme.of(context).copyWith(
-                              canvasColor: Color(0xff24252A),
+                              canvasColor: Colors.white,
                             ),
                             child: Container(
                               width: horizVal * 75,
@@ -318,13 +346,13 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                 ),
                 RoundedLoadingButton(
                   controller: _btnController,
-                  color: Colors.white,
+                  color: kBackgroundColor,
                   child: Text('Get Started',
                       style: TextStyle(
                         fontSize: size.height * 0.025,
                         fontFamily: 'gilroy',
                         fontWeight: FontWeight.w900,
-                        color: kBackgroundColor,
+                        color: Colors.white,
                       )),
                   onPressed: () async {
                     var storageService = await StorageService.getInstance();

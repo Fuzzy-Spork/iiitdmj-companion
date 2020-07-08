@@ -79,23 +79,12 @@ class _DashBoardState extends State<DashBoard> {
                   SizedBox(
                     height: 5,
                   ),
-                  Row(
-                    children: <Widget>[
-                      SizedBox(
-                        width: size.width * 0.4,
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          '2019148',
-                          style: TextStyle(
-                              color: kTextColor,
-                              fontSize: size.height * 0.02,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                      Spacer(),
-                    ],
+                  Text(
+                    '2019148',
+                    style: TextStyle(
+                        color: kTextColor,
+                        fontSize: size.height * 0.02,
+                        fontWeight: FontWeight.w700),
                   ),
                   SizedBox(
                     height: size.height * 0.05,
