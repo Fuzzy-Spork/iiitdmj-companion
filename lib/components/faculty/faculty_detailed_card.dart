@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iiitdmjcompanion/constants.dart';
 import 'package:iiitdmjcompanion/services/size_config.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+
 import '../../constants.dart';
 import '../../models/instructor/instructor.dart';
-import 'package:iiitdmjcompanion/constants.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class FacultyCard extends StatefulWidget {
   final Instructor instructor;
@@ -233,10 +234,12 @@ class _FacultyCardState extends State<FacultyCard> {
               height: 70,
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: kBackgroundColor,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30))),
+                color: kBackgroundColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+              ),
               child: Center(
                 child: Row(
                   children: [
