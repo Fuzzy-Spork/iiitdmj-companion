@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/services/size_config.dart';
+
 import '../../constants.dart';
 import '../../models/instructor/instructor.dart';
 import 'search_faculty_card.dart';
@@ -55,7 +56,7 @@ class _SearchBarState extends State<SearchBar> {
   void filterSearchResults(String query) {
     List<String> dummySearchList = List<String>();
     dummySearchList.addAll(duplicateItems);
-    query.toLowerCase();
+    query = query.toLowerCase();
     if (query.isNotEmpty) {
       List<String> dummyListData = List<String>();
       dummySearchList.forEach((item) {
@@ -179,25 +180,26 @@ class _SearchBarState extends State<SearchBar> {
                           child: Container(
                             height: 55,
                             decoration: BoxDecoration(
-                                border: Border(
-                                  right: BorderSide(
-                                    color: kBackgroundColor,
-                                    width: 1,
-                                  ),
-                                  left: BorderSide(
-                                    color: kBackgroundColor,
-                                    width: 1,
-                                  ),
-                                  top: BorderSide(
-                                    color: kBackgroundColor,
-                                    width: 1,
-                                  ),
-                                  bottom: BorderSide(
-                                    color: kBackgroundColor,
-                                    width: 1,
-                                  ),
+                              border: Border(
+                                right: BorderSide(
+                                  color: kBackgroundColor,
+                                  width: 1,
                                 ),
-                                borderRadius: BorderRadius.circular(35)),
+                                left: BorderSide(
+                                  color: kBackgroundColor,
+                                  width: 1,
+                                ),
+                                top: BorderSide(
+                                  color: kBackgroundColor,
+                                  width: 1,
+                                ),
+                                bottom: BorderSide(
+                                  color: kBackgroundColor,
+                                  width: 1,
+                                ),
+                              ),
+                              borderRadius: BorderRadius.circular(35),
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.only(
                                 left: 5,
@@ -224,6 +226,34 @@ class _SearchBarState extends State<SearchBar> {
                   ),
                 ),
               ),
+              Text(
+                'FACULTY',
+                style: TextStyle(
+                    fontFamily: 'gilroy',
+                    fontWeight: FontWeight.w900,
+                    color: kIconColor,
+                    fontSize: vertVal * 5),
+              ),
+              Text(
+                'People',
+                style: TextStyle(
+                  fontFamily: 'gilroy',
+                  color: kIconColor,
+                  fontSize: vertVal * 3.5,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: horizVal * 10,
+                  right: horizVal * 10,
+                  top: vertVal,
+                  bottom: vertVal,
+                ),
+                child: Divider(
+                  thickness: 1,
+                  color: kIconColor,
+                ),
+              ),
               Expanded(
                 child: (isLoading == true || allFaculty.length == 0)
                     ? Center(
@@ -233,12 +263,9 @@ class _SearchBarState extends State<SearchBar> {
                         shrinkWrap: true,
                         itemCount: items.length,
                         itemBuilder: (context, index) {
-                          if (facultyMap.keys.length != 0) {
-                            return ListTile(
-                                title: facultyMap[Instructor.instructorFromName(
-                                    items[index], allFaculty)]);
-                          }
-                          return Container();
+                          return ListTile(
+                              title: facultyMap[Instructor.instructorFromName(
+                                  items[index], allFaculty)]);
                         },
                       ),
               ),
@@ -249,8 +276,3 @@ class _SearchBarState extends State<SearchBar> {
     );
   }
 }
-
-//Text(
-//'${items[index]}',
-//style: TextStyle(color: Colors.white),
-//),
