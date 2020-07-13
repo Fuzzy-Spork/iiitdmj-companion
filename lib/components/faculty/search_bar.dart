@@ -226,32 +226,41 @@ class _SearchBarState extends State<SearchBar> {
                   ),
                 ),
               ),
-              Text(
-                'FACULTY',
-                style: TextStyle(
+              Visibility(
+                visible: !searchBarVisible,
+                child: Text(
+                  'FACULTY',
+                  style: TextStyle(
+                      fontFamily: 'gilroy',
+                      fontWeight: FontWeight.w900,
+                      color: kIconColor,
+                      fontSize: vertVal * 5),
+                ),
+              ),
+              Visibility(
+                visible: !searchBarVisible,
+                child: Text(
+                  'People',
+                  style: TextStyle(
                     fontFamily: 'gilroy',
-                    fontWeight: FontWeight.w900,
                     color: kIconColor,
-                    fontSize: vertVal * 5),
-              ),
-              Text(
-                'People',
-                style: TextStyle(
-                  fontFamily: 'gilroy',
-                  color: kIconColor,
-                  fontSize: vertVal * 3.5,
+                    fontSize: vertVal * 3.5,
+                  ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: horizVal * 10,
-                  right: horizVal * 10,
-                  top: vertVal,
-                  bottom: vertVal,
-                ),
-                child: Divider(
-                  thickness: 1,
-                  color: kIconColor,
+              Visibility(
+                visible: !searchBarVisible,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: horizVal * 10,
+                    right: horizVal * 10,
+                    top: vertVal,
+                    bottom: vertVal,
+                  ),
+                  child: Divider(
+                    thickness: 1,
+                    color: kIconColor,
+                  ),
                 ),
               ),
               Expanded(
