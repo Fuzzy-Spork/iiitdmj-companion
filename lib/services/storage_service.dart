@@ -19,6 +19,10 @@ class StorageService {
     saveStringToDisk(UserKey, json.encode(userToSave.toJson()));
   }
 
+  void signOut() {
+    _sharedPreferences.remove(UserKey);
+  }
+
   static Future<StorageService> getInstance() async {
     if (_instance == null) {
       _instance = StorageService();
@@ -43,8 +47,7 @@ class StorageService {
 
   void deleteKey(String key) {
     print(
-        '(TRACE) StorageService: deleteKey. key: $key value: ${_getFromDisk(
-            key)}');
+        '(TRACE) StorageService: deleteKey. key: $key value: ${_getFromDisk(key)}');
     _sharedPreferences.remove(key);
   }
 
