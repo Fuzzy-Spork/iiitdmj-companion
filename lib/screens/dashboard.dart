@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/screens/faculty_search_screen.dart';
+import 'package:iiitdmjcompanion/screens/login_screen.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
 
 import '../constants.dart';
@@ -31,10 +32,21 @@ class _DashBoardState extends State<DashBoard> {
                 children: <Widget>[
                   Row(
                     children: [
-                      Icon(
-                        Icons.account_circle,
-                        color: kIconColor,
-                        size: 32,
+                      GestureDetector(
+                        onTap: () async {
+                          var prefs = await StorageService.getInstance();
+                          prefs.signOut();
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UserSignUpScreen(),
+                              ));
+                        },
+                        child: Icon(
+                          Icons.account_circle,
+                          color: kIconColor,
+                          size: 32,
+                        ),
                       ),
                       Spacer(),
                       Text(
@@ -101,6 +113,7 @@ class _DashBoardState extends State<DashBoard> {
                     height: size.height * 0.05,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       GestureDetector(
                         onTap: () {
@@ -144,7 +157,6 @@ class _DashBoardState extends State<DashBoard> {
                           ),
                         ),
                       ),
-                      Spacer(),
                       GestureDetector(
                         onTap: () {
                           setState(() {
@@ -194,6 +206,7 @@ class _DashBoardState extends State<DashBoard> {
                     height: size.height * 0.03,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       GestureDetector(
                         onTap: () {
@@ -237,7 +250,6 @@ class _DashBoardState extends State<DashBoard> {
                           ),
                         ),
                       ),
-                      Spacer(),
                       GestureDetector(
                         onTap: () {
 //                        setState(() {
