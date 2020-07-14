@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iiitdmjcompanion/constants.dart';
+import 'package:iiitdmjcompanion/services/size_config.dart';
+
 import '../../constants.dart';
 import '../../models/instructor/instructor.dart';
 import 'faculty_detailed_card.dart';
-import 'package:iiitdmjcompanion/services/size_config.dart';
-import 'package:iiitdmjcompanion/constants.dart';
 
 class SearchFacultyCard extends StatefulWidget {
   SearchFacultyCard({
@@ -27,15 +28,17 @@ class _SearchFacultyCardState extends State<SearchFacultyCard> {
       onTap: () {
         setState(() {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => FacultyCard(
-                        instructor: widget.instructor,
-                      )));
+            context,
+            MaterialPageRoute(
+              builder: (context) => FacultyCard(
+                instructor: widget.instructor,
+              ),
+            ),
+          );
         });
       },
       child: Container(
-        height: 60,
+        height: 70,
         decoration: BoxDecoration(
           color: Colors.white,
         ),
@@ -54,35 +57,32 @@ class _SearchFacultyCardState extends State<SearchFacultyCard> {
                 padding: const EdgeInsets.only(right: 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text(
                       widget.instructor.name,
                       style: TextStyle(
-                        fontSize: horizVal * 4,
+                        fontSize: horizVal * 5,
                         color: kTextColor,
-                        fontFamily: 'code-light',
+                        fontFamily: 'gilroy',
                         letterSpacing: 1,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w500,
                       ),
-                    ),
-                    SizedBox(
-                      height: 2.0,
                     ),
                     Text(
                       Instructor
                           .designationEnumMap[widget.instructor.designation],
                       style: TextStyle(
-                        fontSize: horizVal * 4,
+                        fontSize: horizVal * 4.5,
                         color: kTextColor,
-                        fontFamily: 'code-bold',
-                        fontWeight: FontWeight.w400,
+                        fontFamily: 'gilroy',
+                        fontWeight: FontWeight.w800,
                       ),
                     )
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
