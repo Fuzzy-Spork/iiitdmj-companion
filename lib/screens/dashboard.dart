@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/screens/faculty_search_screen.dart';
 import 'package:iiitdmjcompanion/screens/login_screen.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
-
+import 'mess_menu_screen.dart';
 import '../constants.dart';
 
 class DashBoard extends StatefulWidget {
@@ -252,12 +252,12 @@ class _DashBoardState extends State<DashBoard> {
                       ),
                       GestureDetector(
                         onTap: () {
-//                        setState(() {
-//                          Navigator.push(
-//                              context,
-//                              MaterialPageRoute(
-//                                  builder: (context) => BusSchedule()));
-//                        });
+                          setState(() {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MessMenuScreen()));
+                          });
                         },
                         child: Card(
                           elevation: 0,

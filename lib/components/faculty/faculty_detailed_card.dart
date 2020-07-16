@@ -17,6 +17,7 @@ class FacultyCard extends StatefulWidget {
 class _FacultyCardState extends State<FacultyCard> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     var vertVal = displaySafeHeightBlocks(context);
     return SafeArea(
       child: Scaffold(
@@ -35,6 +36,7 @@ class _FacultyCardState extends State<FacultyCard> {
                       });
                     },
                     child: CircleAvatar(
+                      radius: size.height * 0.04,
                       backgroundColor: Colors.transparent,
                       child: Icon(
                         Icons.arrow_back_ios,
