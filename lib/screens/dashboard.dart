@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/screens/faculty_search_screen.dart';
 import 'package:iiitdmjcompanion/screens/login_screen.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
+import 'bus_schedule_screen.dart';
 import 'mess_menu_screen.dart';
 import '../constants.dart';
+import 'timetable_screen.dart';
 
 class DashBoard extends StatefulWidget {
   @override
@@ -117,12 +119,12 @@ class _DashBoardState extends State<DashBoard> {
                     children: [
                       GestureDetector(
                         onTap: () {
-//                        setState(() {
-//                          Navigator.push(
-//                              context,
-//                              MaterialPageRoute(
-//                                  builder: (context) => ResultPageToday()));
-//                        });
+                          setState(() {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TimeTableScreen()));
+                          });
                         },
                         child: Card(
                           elevation: 0,
@@ -210,12 +212,12 @@ class _DashBoardState extends State<DashBoard> {
                     children: [
                       GestureDetector(
                         onTap: () {
-//                        setState(() {
-//                          Navigator.push(
-//                              context,
-//                              MaterialPageRoute(
-//                                  builder: (context) => ResultPageToday()));
-//                        });
+                          setState(() {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BusScheduleScreen()));
+                          });
                         },
                         child: Card(
                           elevation: 0,

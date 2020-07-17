@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/constants.dart';
-import 'package:iiitdmjcompanion/components/bus_schedule.dart';
+import 'package:iiitdmjcompanion/components/timetable.dart';
 
-class BusScheduleScreen extends StatefulWidget {
+class TimeTableScreen extends StatefulWidget {
   @override
-  _BusScheduleScreenState createState() => _BusScheduleScreenState();
+  _TimeTableScreenState createState() => _TimeTableScreenState();
 }
 
-class _BusScheduleScreenState extends State<BusScheduleScreen> {
-  List items = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+class _TimeTableScreenState extends State<TimeTableScreen> {
+  List items = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   int _index = 0;
 
   @override
@@ -44,15 +44,26 @@ class _BusScheduleScreenState extends State<BusScheduleScreen> {
               height: size.height * 0.01,
             ),
             Text(
-              'BUS SCHEDULE',
+              'TIME TABLE',
               style: TextStyle(
                 color: kBackgroundColor,
-                fontSize: size.height * 0.05,
+                fontSize: size.height * 0.047,
                 fontWeight: FontWeight.w800,
               ),
             ),
             SizedBox(
-              height: size.height * 0.03,
+              height: size.height * 0.005,
+            ),
+            Text(
+              'Class Schedules',
+              style: TextStyle(
+                color: kBackgroundColor,
+                fontSize: size.height * 0.040,
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+            SizedBox(
+              height: size.height * 0.02,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -68,7 +79,7 @@ class _BusScheduleScreenState extends State<BusScheduleScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SizedBox(
                 height: 80, // card height
-                child: busSwipeableCards(),
+                child: timeTableSwipeableCards(),
               ),
             ),
             Spacer(),
@@ -77,28 +88,30 @@ class _BusScheduleScreenState extends State<BusScheduleScreen> {
                   left: size.width * 0.05,
                   right: size.width * 0.05,
                   bottom: size.height * 0.02),
-              height: size.height * 0.55,
+              height: size.height * 0.53,
               width: size.width - size.width * 0.15,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
               ),
               child: ListView.builder(
-                itemCount: busTime[_index].length,
+                itemCount: courseCode[_index].length,
                 itemBuilder: (context, i) {
-                  if (i != (busTime[_index].length - 1)) {
-                    return BusScheduleCard(
+                  if (i != (courseCode[_index].length - 1)) {
+                    return TimeTableCard(
                       visible: true,
                       size: size,
-                      time: busTime[_index][i],
-                      route: busRoute[_index][i],
+                      courseCode: courseCode[_index][i],
+                      time: time[_index][i],
+                      venue: venue[_index][i],
                     );
                   } else {
-                    return BusScheduleCard(
+                    return TimeTableCard(
                       visible: false,
                       size: size,
-                      time: busTime[_index][i],
-                      route: busRoute[_index][i],
+                      courseCode: courseCode[_index][i],
+                      time: time[_index][i],
+                      venue: venue[_index][i],
                     );
                   }
                 },
@@ -110,9 +123,9 @@ class _BusScheduleScreenState extends State<BusScheduleScreen> {
     );
   }
 
-  PageView busSwipeableCards() {
+  PageView timeTableSwipeableCards() {
     return PageView.builder(
-      itemCount: 7,
+      itemCount: 5,
       onPageChanged: (int index) {
         setState(() {
           return _index = index;
@@ -143,18 +156,20 @@ class _BusScheduleScreenState extends State<BusScheduleScreen> {
   }
 }
 
-class BusScheduleCard extends StatelessWidget {
-  const BusScheduleCard({
+class TimeTableCard extends StatelessWidget {
+  const TimeTableCard({
     Key key,
     @required this.size,
+    @required this.courseCode,
     @required this.time,
-    @required this.route,
+    @required this.venue,
     @required this.visible,
   }) : super(key: key);
 
   final Size size;
+  final String courseCode;
   final String time;
-  final String route;
+  final String venue;
   final bool visible;
 
   @override
@@ -170,9 +185,18 @@ class BusScheduleCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Text(
+                    courseCode,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: size.height * 0.024,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   Text(
                     time,
                     style: TextStyle(
@@ -181,22 +205,8 @@ class BusScheduleCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(
-                    width: size.width * 0.1,
-                  ),
-                  SizedBox(
-                    width: 10,
-                    height: 2,
-                    child: Divider(
-                      color: Colors.white,
-                      thickness: 2,
-                    ),
-                  ),
-                  SizedBox(
-                    width: size.width * 0.1,
-                  ),
                   Text(
-                    route,
+                    venue,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: size.height * 0.024,
