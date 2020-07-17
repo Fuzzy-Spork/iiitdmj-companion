@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../components/faculty/search_bar.dart';
-import 'package:iiitdmjcompanion/constants.dart';
 
 class FacultySearchScreen extends StatefulWidget {
   FacultySearchScreen({Key key}) : super(key: key);

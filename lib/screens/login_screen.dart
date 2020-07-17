@@ -8,28 +8,6 @@ import 'package:iiitdmjcompanion/models/user/user.dart';
 import 'package:iiitdmjcompanion/services/size_config.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
 import '../constants.dart';
 
 class UserSignUpScreen extends StatefulWidget {

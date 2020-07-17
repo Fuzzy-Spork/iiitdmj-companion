@@ -71,7 +71,7 @@ class _MessMenuScreenState extends State<MessMenuScreen> {
                     backgroundColor: Colors.transparent,
                     child: Icon(
                       Icons.arrow_back_ios,
-                      color: kBackgroundColor,
+                      color: kIconColor,
                       size: 23,
                     ),
                   ),
@@ -86,8 +86,8 @@ class _MessMenuScreenState extends State<MessMenuScreen> {
               'MESS MENU',
               style: TextStyle(
                 color: kBackgroundColor,
-                fontSize: size.height * 0.05,
-                fontWeight: FontWeight.w600,
+                fontSize: size.height * 0.050,
+                fontWeight: FontWeight.w800,
               ),
             ),
             SizedBox(
@@ -112,121 +112,156 @@ class _MessMenuScreenState extends State<MessMenuScreen> {
             ),
             Spacer(),
             Container(
-              margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-              height: size.height * 0.55,
-              width: size.width - 60,
+              margin: EdgeInsets.only(
+                left: size.width * 0.05,
+                right: size.width * 0.05,
+              ),
+              height: size.height * 0.13,
+              width: size.width - size.width * 0.1,
               decoration: BoxDecoration(
                 color: kBackgroundColor,
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(13),
               ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Breakfast',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w900,
-                                decoration: TextDecoration.underline),
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Text(
-                            breakfastText,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Spacer(),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 50, right: 50, bottom: 10),
-                            child: Divider(
-                              thickness: 1,
-                              color: Colors.white,
-                            ),
-                          )
-                        ],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Breakfast',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w900,
+                        decoration: TextDecoration.underline),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: size.width * 0.04),
+                    child: Text(
+                      breakfastText,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Lunch',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w900,
-                                decoration: TextDecoration.underline),
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Text(
-                            lunchText,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Spacer(),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 50, right: 50, bottom: 10),
-                            child: Divider(
-                              thickness: 1,
-                              color: Colors.white,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Dinner',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w900,
-                                decoration: TextDecoration.underline),
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Text(
-                            dinnerText,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
+              child: Container(
+                width: 1.2,
+                height: size.height * 0.02,
+                color: Colors.white,
+                child: VerticalDivider(
+                  thickness: 1.2,
+                  color: kBackgroundColor,
                 ),
               ),
-            )
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                left: size.width * 0.05,
+                right: size.width * 0.05,
+              ),
+              height: size.height * 0.13,
+              width: size.width - size.width * 0.1,
+              decoration: BoxDecoration(
+                color: kBackgroundColor,
+                borderRadius: BorderRadius.circular(13),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Lunch',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w900,
+                        decoration: TextDecoration.underline),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: size.width * 0.04),
+                    child: Text(
+                      lunchText,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
+              child: Container(
+                width: 1.2,
+                height: size.height * 0.02,
+                color: Colors.white,
+                child: VerticalDivider(
+                  thickness: 1.2,
+                  color: kBackgroundColor,
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                left: size.width * 0.05,
+                right: size.width * 0.05,
+                bottom: size.height * 0.03,
+              ),
+              height: size.height * 0.13,
+              width: size.width - size.width * 0.1,
+              decoration: BoxDecoration(
+                color: kBackgroundColor,
+                borderRadius: BorderRadius.circular(13),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Dinner',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w900,
+                        decoration: TextDecoration.underline),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: size.width * 0.04),
+                    child: Text(
+                      dinnerText,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
