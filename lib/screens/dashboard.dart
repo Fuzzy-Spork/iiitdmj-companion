@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/screens/faculty_search_screen.dart';
 import 'package:iiitdmjcompanion/screens/login_screen.dart';

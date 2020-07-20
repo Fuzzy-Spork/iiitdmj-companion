@@ -8,6 +8,7 @@ import 'package:iiitdmjcompanion/models/user/user.dart';
 import 'package:iiitdmjcompanion/services/size_config.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+
 import '../constants.dart';
 
 class UserSignUpScreen extends StatefulWidget {
@@ -21,12 +22,13 @@ class UserSignUpScreen extends StatefulWidget {
 
 class _UserSignUpScreenState extends State<UserSignUpScreen> {
   String name = '';
-  String selectedBranch = 'CSE';
-  String selectedYear = 'First';
-  List<String> branches = ['CSE', 'ECE', 'ME', 'Design'];
-  List<String> years = ['First', 'Second', 'Third', 'Fourth'];
+  String selectedBranch = 'Branch';
+  String selectedYear = 'Year';
+  List<String> branches = ['Branch', 'CSE', 'ECE', 'ME', 'Design'];
+  List<String> years = ['Year', 'First', 'Second', 'Third', 'Fourth'];
   Group selectedGroup = Group.A;
   final _btnController = RoundedLoadingButtonController();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   DropdownButton<String> branchDropDown() {
     List<DropdownMenuItem<String>> dropdownItems = [];
@@ -35,9 +37,10 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
         child: Text(
           branch,
           style: TextStyle(
-            fontFamily: 'code-bold',
+            fontFamily: 'gilroy',
             color: kTextColor,
             fontSize: 20,
+            fontWeight: branch == 'Branch' ? FontWeight.w300 : FontWeight.w700,
           ),
         ),
         value: branch,
@@ -63,9 +66,10 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
         child: Text(
           year,
           style: TextStyle(
-            fontFamily: 'code-bold',
+            fontFamily: 'gilroy',
             color: kTextColor,
             fontSize: 20,
+            fontWeight: year == 'Year' ? FontWeight.w300 : FontWeight.w700,
           ),
         ),
         value: year,
@@ -139,7 +143,11 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
     var horizVal = displaySafeWidthBlocks(context);
     var vertVal = displaySafeHeightBlocks(context);
     Size size = MediaQuery.of(context).size;
+    final noNamesnackbar = SnackBar(
+      content: Text('Please Enter A Valid Name'),
+    );
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         child: SafeArea(
           child: Center(
@@ -336,36 +344,59 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                     var storageService = await StorageService.getInstance();
                     _btnController.start();
                     if (name.isEmpty) {
-                      //TODO: Create Prompt
                       print('Name is Null');
-                      _btnController.reset();
+                      _scaffoldKey.currentState.showSnackBar(noNamesnackbar);
+                      _btnController.error();
+                      Future.delayed(Duration(seconds: 2), () {
+                        _btnController.reset();
+                      });
                     } else {
-                      try {
-                        User user = User(
-                            name: name,
-                            branch: (BranchEnumMap.keys.where(
-                                    (k) => BranchEnumMap[k] == selectedBranch))
-                                .first,
-                            year: (YearEnumMap.keys.where(
-                                (k) => YearEnumMap[k] == selectedYear)).first,
-                            group: selectedGroup);
-                        print(user.toJson());
-                        storageService.saveUserInDB(user);
-                        _btnController.success();
-                        Future.delayed(Duration(seconds: 1), () {
-                          Navigator.of(context)
-                              .popUntil((route) => route.isFirst);
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LandingPage()));
-                        });
-                        Future.delayed(Duration(seconds: 1), () {
+                      if (selectedBranch == 'Branch') {
+                        _scaffoldKey.currentState.showSnackBar(SnackBar(
+                          content: Text('Select a Branch to Proceed'),
+                        ));
+                        _btnController.error();
+                        Future.delayed(Duration(seconds: 2), () {
                           _btnController.reset();
                         });
-                      } catch (e) {
-                        print('Error $e');
-                        _btnController.reset();
+                      } else {
+                        if (selectedYear == 'Year') {
+                          _scaffoldKey.currentState.showSnackBar(SnackBar(
+                            content: Text('Select an year to Continue'),
+                          ));
+                          _btnController.error();
+                          Future.delayed(Duration(seconds: 2), () {
+                            _btnController.reset();
+                          });
+                        } else {
+                          try {
+                            User user = User(
+                                name: name,
+                                branch: (BranchEnumMap.keys.where((k) =>
+                                    BranchEnumMap[k] == selectedBranch)).first,
+                                year: (YearEnumMap.keys.where(
+                                        (k) => YearEnumMap[k] == selectedYear))
+                                    .first,
+                                group: selectedGroup);
+                            print(user.toJson());
+                            storageService.saveUserInDB(user);
+                            _btnController.success();
+                            Future.delayed(Duration(seconds: 1), () {
+                              Navigator.of(context)
+                                  .popUntil((route) => route.isFirst);
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LandingPage()));
+                            });
+                            Future.delayed(Duration(seconds: 1), () {
+                              _btnController.reset();
+                            });
+                          } catch (e) {
+                            print('Error $e');
+                            _btnController.reset();
+                          }
+                        }
                       }
                     }
                   },
