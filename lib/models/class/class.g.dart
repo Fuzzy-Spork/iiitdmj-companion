@@ -10,8 +10,7 @@ Class _$ClassFromJson(Map<String, dynamic> json) {
   return Class(
     course: json['course'] as String,
     day: _$enumDecodeNullable(_$DayEnumMap, json['day']),
-    timeStart: json['timeStart'] as int,
-    timeEnd: json['timeEnd'] as int,
+    timeStart: json['timeStart'] as String,
     venue: _$enumDecodeNullable(_$VenueEnumMap, json['venue']),
     group: _$enumDecodeNullable(_$GroupEnumMap, json['group']),
   );
@@ -22,7 +21,6 @@ Map<String, dynamic> _$ClassToJson(Class instance) => <String, dynamic>{
       'group': _$GroupEnumMap[instance.group],
       'day': _$DayEnumMap[instance.day],
       'timeStart': instance.timeStart,
-      'timeEnd': instance.timeEnd,
       'venue': _$VenueEnumMap[instance.venue],
     };
 

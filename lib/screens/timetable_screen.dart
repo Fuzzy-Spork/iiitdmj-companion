@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:iiitdmjcompanion/components/timetable_card.dart';
 import 'package:iiitdmjcompanion/constants.dart';
 import 'package:iiitdmjcompanion/components/timetable.dart';
+
+import '../models/class/class.dart';
 
 class TimeTableScreen extends StatefulWidget {
   @override
@@ -10,6 +14,23 @@ class TimeTableScreen extends StatefulWidget {
 class _TimeTableScreenState extends State<TimeTableScreen> {
   List items = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   int _index = 0;
+  bool isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    getTimeTable().then((value) {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
+  List<List<Class>> classes;
+  Future getTimeTable() async {
+    QuerySnapshot db =
+        await Firestore.instance.collection('Classes').getDocuments();
+    classes = await Class.classesFromQuerySnapshot(db);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,28 +115,32 @@ class _TimeTableScreenState extends State<TimeTableScreen> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: ListView.builder(
-                itemCount: courseCode[_index].length,
-                itemBuilder: (context, i) {
-                  if (i != (courseCode[_index].length - 1)) {
-                    return TimeTableCard(
-                      visible: true,
-                      size: size,
-                      courseCode: courseCode[_index][i],
-                      time: time[_index][i],
-                      venue: venue[_index][i],
-                    );
-                  } else {
-                    return TimeTableCard(
-                      visible: false,
-                      size: size,
-                      courseCode: courseCode[_index][i],
-                      time: time[_index][i],
-                      venue: venue[_index][i],
-                    );
-                  }
-                },
-              ),
+              child: isLoading == true
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ListView.builder(
+                      itemCount: classes[_index].length,
+                      itemBuilder: (context, i) {
+                        if (i != (classes[_index].length - 1)) {
+                          return TimeTableCard(
+                            visible: true,
+                            size: size,
+                            courseCode: classes[_index][i].course,
+                            time: classes[_index][i].timeStart,
+                            venue: Class.venueEnumMap[classes[_index][i].venue],
+                          );
+                        } else {
+                          return TimeTableCard(
+                            visible: false,
+                            size: size,
+                            courseCode: classes[_index][i].course,
+                            time: classes[_index][i].timeStart,
+                            venue: Class.venueEnumMap[classes[_index][i].venue],
+                          );
+                        }
+                      },
+                    ),
             )
           ],
         ),
@@ -152,88 +177,6 @@ class _TimeTableScreenState extends State<TimeTableScreen> {
         );
       },
       controller: PageController(viewportFraction: 0.25),
-    );
-  }
-}
-
-class TimeTableCard extends StatelessWidget {
-  const TimeTableCard({
-    Key key,
-    @required this.size,
-    @required this.courseCode,
-    @required this.time,
-    @required this.venue,
-    @required this.visible,
-  }) : super(key: key);
-
-  final Size size;
-  final String courseCode;
-  final String time;
-  final String venue;
-  final bool visible;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Container(
-            height: size.height * 0.085,
-            width: size.width - size.width * 0.15,
-            decoration: BoxDecoration(
-              color: kBackgroundColor,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    courseCode,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.height * 0.024,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    time,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.height * 0.024,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    venue,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: size.height * 0.024,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Visibility(
-            visible: visible,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
-              child: Container(
-                width: 1.2,
-                height: size.height * 0.03,
-                color: Colors.white,
-                child: VerticalDivider(
-                  thickness: 1.2,
-                  color: kBackgroundColor,
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
     );
   }
 }
