@@ -107,7 +107,7 @@ class _MessMenuScreenState extends State<MessMenuScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SizedBox(
                 height: 80, // card height
-                child: MessSwipeableCards(),
+                child: messSwipeableCards(),
               ),
             ),
             Spacer(),
@@ -268,7 +268,7 @@ class _MessMenuScreenState extends State<MessMenuScreen> {
     );
   }
 
-  PageView MessSwipeableCards() {
+  PageView messSwipeableCards() {
     return PageView.builder(
       itemCount: 7,
       onPageChanged: (int index) {
