@@ -7,6 +7,7 @@ import 'bus_schedule_screen.dart';
 import 'login_screen.dart';
 import 'mess_menu_screen.dart';
 import 'timetable_screen.dart';
+import 'about_screen.dart';
 
 class DashBoard extends StatefulWidget {
   @override
@@ -305,10 +306,20 @@ class _DashBoardState extends State<DashBoard> {
                   Row(
                     children: [
                       Spacer(),
-                      Icon(
-                        Icons.settings,
-                        color: kIconColor,
-                        size: 22,
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AboutScreen()));
+                          });
+                        },
+                        child: Icon(
+                          Icons.settings,
+                          color: kIconColor,
+                          size: 22,
+                        ),
                       ),
                       SizedBox(
                         width: 5,
@@ -316,6 +327,12 @@ class _DashBoardState extends State<DashBoard> {
                       GestureDetector(
                         onTap: () {
                           //Provider.of<StorageService>(context, listen: false).deleteUser();
+                          setState(() {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AboutScreen()));
+                          });
                         },
                         child: Text(
                           'Settings',
