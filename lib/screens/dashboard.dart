@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/screens/faculty_search_screen.dart';
-import 'package:iiitdmjcompanion/screens/login_screen.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
-import 'bus_schedule_screen.dart';
-import 'mess_menu_screen.dart';
+
 import '../constants.dart';
+import 'bus_schedule_screen.dart';
+import 'login_screen.dart';
+import 'mess_menu_screen.dart';
 import 'timetable_screen.dart';
 
 class DashBoard extends StatefulWidget {
@@ -15,6 +16,7 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
+//    print(tt2[6]);
     Size size = MediaQuery.of(context).size;
     return FutureBuilder(
       future: StorageService.getInstance(),
@@ -38,10 +40,11 @@ class _DashBoardState extends State<DashBoard> {
                           var prefs = await StorageService.getInstance();
                           prefs.signOut();
                           Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => UserSignUpScreen(),
-                              ));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UserSignUpScreen(),
+                            ),
+                          );
                         },
                         child: Icon(
                           Icons.account_circle,

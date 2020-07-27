@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/constants.dart';
+import 'package:iiitdmjcompanion/models/class/class.dart';
+import 'package:iiitdmjcompanion/models/mess_menu/mess_menu.dart';
 
 class MessMenuScreen extends StatefulWidget {
   @override
@@ -8,46 +11,54 @@ class MessMenuScreen extends StatefulWidget {
 
 class _MessMenuScreenState extends State<MessMenuScreen> {
   List items = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  List breakfast = [
-    'Vada-Pav, Sambhar, Chutney, Sprouts, Toast, Tea, Butter, Milk',
-    'Pasta, Chutney, Sprouts, Toast, Tea, Butter, Milk',
-    'Uttapam, Nariyal Chutney, Sprouts, Toast, Tea, Butter, Milk',
-    'Halwa, Chane, Sprouts, Toast, Tea, Butter, Milk',
-    'Methi Parathe, Chutney, Sprouts, Toast, Tea, Butter, Milk',
-    'Dosa, Sambhar, Chutney, Sprouts, Toast, Tea, Butter, Milk',
-    'Aaloo Paratha, Chutney, Sprouts, Toast, Tea, Butter, Milk'
-  ];
-  List lunch = [
-    'Chhole-Bhatoore, Raita, Roti, Rice, Dal, Salad',
-    'Dal, Sabji, Roti, Rice, Salad',
-    'Chhole-Bhatoore, Raita, Roti, Rice, Dal, Salad',
-    'Halwa, Chane, Sprouts, Toast, Tea, Butter, Milk',
-    'Chhole-Bhatoore, Raita, Roti, Rice, Dal, Salad',
-    'Dosa, Sambhar, Chutney, Sprouts, Toast, Tea, Butter, Milk',
-    'Chhole-Bhatoore, Raita, Roti, Rice, Dal, Salad'
-  ];
-  List dinner = [
-    'Dal, Roti, Rice, Dal, Salad',
-    'Dal, Sabji, Pulao, Rice, Salad',
-    'Chhole-Bhatoore, Raita, Roti, Rice, Dal, Salad',
-    'Halwa, Chane, Sprouts, Toast, Tea, Butter, Milk',
-    'Chhole-Bhatoore, Dahi, Roti, Rice, Dal, Salad',
-    'Dosa, Sambhar, Chutney, Sprouts, Toast, Tea, Butter, Milk',
-    'Chhole-Bhatoore, Raita, Roti, Rice, Dal, Salad'
-  ];
-
-  String breakfastText;
-  String lunchText;
-  String dinnerText;
-
+  List breakfast = [];
+  List lunch = [];
+  List dinner = [];
+  Map<int, MessMenu> menus = {};
+  String breakfastText = '';
+  String lunchText = '';
+  String dinnerText = '';
+  bool isLoading;
   int _index = 0;
+
+  generateText(List<String> list) {
+    String a = '';
+    for (var item in list) {
+      if (list.last != item) {
+        a += item + ', ';
+      } else {
+        a += item;
+      }
+    }
+    return a;
+  }
 
   @override
   void initState() {
+    super.initState();
+    isLoading = true;
+    getMenu();
+  }
+
+  void getMenu() async {
+    CollectionReference db = Firestore.instance.collection('MessMenu');
+    QuerySnapshot query = await db.getDocuments();
+    for (var doc in query.documents) {
+      menus[Class.intDayMap[doc.data['day']]] = MessMenu.fromJson(doc.data);
+    }
+    setState(() {
+      isLoading = false;
+    });
+    print(menus);
+    menus.forEach((key, value) {
+      breakfast.add(generateText(value.breakfast));
+      dinner.add(generateText(value.dinner));
+      lunch.add(generateText(value.lunch));
+    });
     breakfastText = breakfast[_index];
     lunchText = lunch[_index];
     dinnerText = dinner[_index];
-    super.initState();
+    print(breakfast);
   }
 
   @override
@@ -107,160 +118,174 @@ class _MessMenuScreenState extends State<MessMenuScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SizedBox(
                 height: 80, // card height
-                child: MessSwipeableCards(),
+                child: messSwipeableCards(),
               ),
             ),
-            Spacer(),
-            Container(
-              margin: EdgeInsets.only(
-                left: size.width * 0.05,
-                right: size.width * 0.05,
-              ),
-              height: size.height * 0.13,
-              width: size.width - size.width * 0.1,
-              decoration: BoxDecoration(
-                color: kBackgroundColor,
-                borderRadius: BorderRadius.circular(13),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Breakfast',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w900,
-                        decoration: TextDecoration.underline),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.04),
-                    child: Text(
-                      breakfastText,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
+            SizedBox(
+              height: size.height * 0.6,
+              child: isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Column(
+                      children: <Widget>[
+                        Spacer(),
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: size.width * 0.05,
+                            right: size.width * 0.05,
+                          ),
+                          height: size.height * 0.13,
+                          width: size.width - size.width * 0.1,
+                          decoration: BoxDecoration(
+                            color: kBackgroundColor,
+                            borderRadius: BorderRadius.circular(13),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Breakfast',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w900,
+                                    decoration: TextDecoration.underline),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: size.width * 0.04),
+                                child: Text(
+                                  breakfastText,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: size.height * 0.01),
+                          child: Container(
+                            width: 1.2,
+                            height: size.height * 0.02,
+                            color: Colors.white,
+                            child: VerticalDivider(
+                              thickness: 1.2,
+                              color: kBackgroundColor,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: size.width * 0.05,
+                            right: size.width * 0.05,
+                          ),
+                          height: size.height * 0.13,
+                          width: size.width - size.width * 0.1,
+                          decoration: BoxDecoration(
+                            color: kBackgroundColor,
+                            borderRadius: BorderRadius.circular(13),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Lunch',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w900,
+                                    decoration: TextDecoration.underline),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: size.width * 0.04),
+                                child: Text(
+                                  lunchText,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: size.height * 0.01),
+                          child: Container(
+                            width: 1.2,
+                            height: size.height * 0.02,
+                            color: Colors.white,
+                            child: VerticalDivider(
+                              thickness: 1.2,
+                              color: kBackgroundColor,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: size.width * 0.05,
+                            right: size.width * 0.05,
+                            bottom: size.height * 0.03,
+                          ),
+                          height: size.height * 0.13,
+                          width: size.width - size.width * 0.1,
+                          decoration: BoxDecoration(
+                            color: kBackgroundColor,
+                            borderRadius: BorderRadius.circular(13),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Dinner',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w900,
+                                    decoration: TextDecoration.underline),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: size.width * 0.04),
+                                child: Text(
+                                  dinnerText,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Spacer(),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
-              child: Container(
-                width: 1.2,
-                height: size.height * 0.02,
-                color: Colors.white,
-                child: VerticalDivider(
-                  thickness: 1.2,
-                  color: kBackgroundColor,
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                left: size.width * 0.05,
-                right: size.width * 0.05,
-              ),
-              height: size.height * 0.13,
-              width: size.width - size.width * 0.1,
-              decoration: BoxDecoration(
-                color: kBackgroundColor,
-                borderRadius: BorderRadius.circular(13),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Lunch',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w900,
-                        decoration: TextDecoration.underline),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.04),
-                    child: Text(
-                      lunchText,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
-              child: Container(
-                width: 1.2,
-                height: size.height * 0.02,
-                color: Colors.white,
-                child: VerticalDivider(
-                  thickness: 1.2,
-                  color: kBackgroundColor,
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                left: size.width * 0.05,
-                right: size.width * 0.05,
-                bottom: size.height * 0.03,
-              ),
-              height: size.height * 0.13,
-              width: size.width - size.width * 0.1,
-              decoration: BoxDecoration(
-                color: kBackgroundColor,
-                borderRadius: BorderRadius.circular(13),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Dinner',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w900,
-                        decoration: TextDecoration.underline),
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.04),
-                    child: Text(
-                      dinnerText,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ],
         ),
@@ -268,7 +293,7 @@ class _MessMenuScreenState extends State<MessMenuScreen> {
     );
   }
 
-  PageView MessSwipeableCards() {
+  PageView messSwipeableCards() {
     return PageView.builder(
       itemCount: 7,
       onPageChanged: (int index) {

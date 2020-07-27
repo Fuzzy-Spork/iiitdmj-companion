@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/constants.dart';
-import 'package:iiitdmjcompanion/components/bus_schedule.dart';
+import 'package:iiitdmjcompanion/models/busTT/busTT.dart';
+import 'package:iiitdmjcompanion/models/class/class.dart';
 
 class BusScheduleScreen extends StatefulWidget {
   @override
@@ -10,9 +12,37 @@ class BusScheduleScreen extends StatefulWidget {
 class _BusScheduleScreenState extends State<BusScheduleScreen> {
   List items = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   int _index = 0;
+  List<List<BusTT>> tt = [[], [], [], [], [], [], []];
+  @override
+  void initState() {
+    super.initState();
+    getBusTT();
+  }
+
+  void getBusTT() async {
+    QuerySnapshot query =
+        await Firestore.instance.collection('Bus').getDocuments();
+    print(query.documents);
+    for (var doc in query.documents) {
+      CollectionReference db = Firestore.instance
+          .collection('Bus')
+          .document(doc.documentID)
+          .collection('tt');
+      QuerySnapshot query2 = await db.getDocuments();
+      for (var snap in query2.documents) {
+        tt[Class.intDayMap[doc.data['day']]].add(BusTT.fromJson(snap.data));
+      }
+      tt[Class.intDayMap[doc.data['day']]].sort((a, b) => a.compareTo(b));
+    }
+    for (var t in tt) {
+      t.sort((a, b) => a.compareTo(b));
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
+    print(tt[6]);
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -84,21 +114,22 @@ class _BusScheduleScreenState extends State<BusScheduleScreen> {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: ListView.builder(
-                itemCount: busTime[_index].length,
+                itemCount: tt[_index].length,
                 itemBuilder: (context, i) {
-                  if (i != (busTime[_index].length - 1)) {
+                  if (i != (tt[_index].length - 1)) {
+                    print(i);
                     return BusScheduleCard(
                       visible: true,
                       size: size,
-                      time: busTime[_index][i],
-                      route: busRoute[_index][i],
+                      time: tt[_index][i].time,
+                      route: tt[_index][i].toFrom,
                     );
                   } else {
                     return BusScheduleCard(
                       visible: false,
                       size: size,
-                      time: busTime[_index][i],
-                      route: busRoute[_index][i],
+                      time: tt[_index][i].time,
+                      route: tt[_index][i].toFrom,
                     );
                   }
                 },
@@ -181,20 +212,7 @@ class BusScheduleCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(
-                    width: size.width * 0.1,
-                  ),
-                  SizedBox(
-                    width: 10,
-                    height: 2,
-                    child: Divider(
-                      color: Colors.white,
-                      thickness: 2,
-                    ),
-                  ),
-                  SizedBox(
-                    width: size.width * 0.1,
-                  ),
+                  Spacer(),
                   Text(
                     route,
                     style: TextStyle(

@@ -202,6 +202,15 @@ class Class implements Comparable {
     Day.Saturday: 'Saturday',
     Day.Sunday: 'Sunday',
   };
+  static const intDayMap = {
+    'Monday': 0,
+    'Tuesday': 1,
+    'Wednesday': 2,
+    'Thursday': 3,
+    'Friday': 4,
+    'Saturday': 5,
+    'Sunday': 6,
+  };
 
   static const venueEnumMap = {
     Venue.L102: 'L102',
