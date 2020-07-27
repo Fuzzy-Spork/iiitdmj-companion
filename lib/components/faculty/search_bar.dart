@@ -95,6 +95,7 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     var horizVal = displaySafeWidthBlocks(context);
     var vertVal = displaySafeHeightBlocks(context);
     return SafeArea(
@@ -118,11 +119,12 @@ class _SearchBarState extends State<SearchBar> {
                             });
                           },
                           child: CircleAvatar(
+                            radius: size.height * 0.04,
                             backgroundColor: Colors.transparent,
                             child: Icon(
                               Icons.arrow_back_ios,
                               color: kIconColor,
-                              size: 20,
+                              size: 23,
                             ),
                           ),
                         ),
@@ -135,6 +137,7 @@ class _SearchBarState extends State<SearchBar> {
                             });
                           },
                           child: CircleAvatar(
+                            radius: size.height * 0.04,
                             backgroundColor: Colors.transparent,
                             child: Icon(
                               Icons.search,
@@ -165,6 +168,7 @@ class _SearchBarState extends State<SearchBar> {
                             });
                           },
                           child: CircleAvatar(
+                            radius: size.height * 0.04,
                             backgroundColor: Colors.transparent,
                             child: Icon(
                               Icons.clear,
