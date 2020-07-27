@@ -1,12 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:iiitdmjcompanion/models/class/class.dart';
-import 'package:iiitdmjcompanion/models/mess_menu/menu.dart';
 import 'package:iiitdmjcompanion/screens/faculty_search_screen.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
 
 import '../constants.dart';
 import 'bus_schedule_screen.dart';
+import 'login_screen.dart';
 import 'mess_menu_screen.dart';
 import 'timetable_screen.dart';
 
@@ -39,23 +37,14 @@ class _DashBoardState extends State<DashBoard> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-//                          var prefs = await StorageService.getInstance();
-//                          prefs.signOut();
-//                          Navigator.pushReplacement(
-//                            context,
-//                            MaterialPageRoute(
-//                              builder: (context) => UserSignUpScreen(),
-//                            ),
-//                          );
-                          CollectionReference db =
-                              Firestore.instance.collection('MessMenu');
-                          print(menus);
-                          for (var menu in menus) {
-                            print(menu.day);
-                            await db
-                                .document(Class.dayEnumMap[menu.day])
-                                .setData(menu.toJson());
-                          }
+                          var prefs = await StorageService.getInstance();
+                          prefs.signOut();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UserSignUpScreen(),
+                            ),
+                          );
                         },
                         child: Icon(
                           Icons.account_circle,
