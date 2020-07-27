@@ -208,11 +208,13 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                                   color: kTextColor,
                                 ),
                                 onChanged: (typed) {
-                                  name = typed;
-                                  print(name);
+                                  setState(() {
+                                    name = typed;
+                                    print(name);
+                                  });
                                 },
                                 decoration: InputDecoration(
-                                  labelText: 'Name',
+                                  labelText: name == '' ? 'Name' : '',
                                   labelStyle: TextStyle(
                                     color: kTextColor,
                                     fontSize: 15,
