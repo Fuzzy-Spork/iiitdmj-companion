@@ -12,9 +12,11 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import '../constants.dart';
 
 class UserSignUpScreen extends StatefulWidget {
-  UserSignUpScreen({Key key, this.title}) : super(key: key);
-
+  UserSignUpScreen({Key key, this.title, this.isLogin, this.user})
+      : super(key: key);
+  final User user;
   final String title;
+  final bool isLogin;
 
   @override
   _UserSignUpScreenState createState() => _UserSignUpScreenState();
@@ -26,9 +28,28 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
   String selectedYear = 'Year';
   List<String> branches = ['Branch', 'CSE', 'ECE', 'ME', 'Design'];
   List<String> years = ['Year', 'First', 'Second', 'Third', 'Fourth'];
+  var _textController;
   Group selectedGroup = Group.A;
   final _btnController = RoundedLoadingButtonController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  User user;
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.isLogin == false) {
+      _textController = TextEditingController(text: widget.user.name);
+      print(widget.user.toJson());
+      name = widget.user.name;
+
+      setState(() {
+        print(name);
+      });
+      selectedBranch = BranchEnumMap[widget.user.branch];
+      selectedYear = YearEnumMap[widget.user.year];
+      selectedGroup = widget.user.group;
+    }
+  }
 
   DropdownButton<String> branchDropDown() {
     List<DropdownMenuItem<String>> dropdownItems = [];
@@ -202,10 +223,12 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                           Container(
                               width: horizVal * 75,
                               child: TextField(
+                                controller: _textController,
                                 style: TextStyle(
                                   fontSize: 24,
                                   fontFamily: 'gilroy',
                                   color: kTextColor,
+                                  fontWeight: FontWeight.bold,
                                 ),
                                 onChanged: (typed) {
                                   setState(() {
@@ -335,13 +358,15 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                 RoundedLoadingButton(
                   controller: _btnController,
                   color: kBackgroundColor,
-                  child: Text('Get Started',
-                      style: TextStyle(
-                        fontSize: size.height * 0.025,
-                        fontFamily: 'gilroy',
-                        fontWeight: FontWeight.w900,
-                        color: Colors.white,
-                      )),
+                  child: Text(
+                    widget.isLogin ? 'Get Started' : 'Confirm',
+                    style: TextStyle(
+                      fontSize: size.height * 0.025,
+                      fontFamily: 'gilroy',
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                    ),
+                  ),
                   onPressed: () async {
                     var storageService = await StorageService.getInstance();
                     _btnController.start();

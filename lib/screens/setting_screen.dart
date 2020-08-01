@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/constants.dart';
+import 'package:iiitdmjcompanion/services/storage_service.dart';
+
 import 'about_screen.dart';
+import 'login_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -80,12 +83,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
             SizedBox(
               height: size.height * 0.03,
             ),
-            Text(
-              'Edit Profile',
-              style: TextStyle(
-                color: kBackgroundColor,
-                fontSize: size.height * 0.035,
-                fontWeight: FontWeight.w300,
+            GestureDetector(
+              onTap: () async {
+                StorageService prefs = await StorageService.getInstance();
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserSignUpScreen(
+                      isLogin: false,
+                      user: prefs.userInDB,
+                    ),
+                  ),
+                );
+              },
+              child: Text(
+                'Edit Profile',
+                style: TextStyle(
+                  color: kBackgroundColor,
+                  fontSize: size.height * 0.035,
+                  fontWeight: FontWeight.w300,
+                ),
               ),
             ),
             SizedBox(
@@ -100,20 +118,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             Spacer(),
-            Container(
-              height: size.height * 0.11,
-              width: size.width,
-              margin: EdgeInsets.all(size.height * 0.03),
-              decoration: BoxDecoration(
-                  color: kBackgroundColor,
-                  borderRadius: BorderRadius.circular(20)),
-              child: Center(
-                child: Text(
-                  'Log Out',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: size.height * 0.035,
-                    fontWeight: FontWeight.w800,
+            GestureDetector(
+              onTap: () async {
+                var prefs = await StorageService.getInstance();
+                prefs.signOut();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserSignUpScreen(
+                      isLogin: true,
+                    ),
+                  ),
+                );
+              },
+              child: Container(
+                height: size.height * 0.11,
+                width: size.width,
+                margin: EdgeInsets.all(size.height * 0.03),
+                decoration: BoxDecoration(
+                    color: kBackgroundColor,
+                    borderRadius: BorderRadius.circular(20)),
+                child: Center(
+                  child: Text(
+                    'Log Out',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: size.height * 0.035,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
               ),

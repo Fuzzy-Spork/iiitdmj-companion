@@ -44,6 +44,7 @@ class _LandingPageState extends State<LandingPage> {
                 print('new user');
                 return UserSignUpScreen(
                   title: 'User Sign Up',
+                  isLogin: true,
                 );
               } else {
                 return DashBoard();
@@ -52,6 +53,7 @@ class _LandingPageState extends State<LandingPage> {
               print('Error: $e');
               return UserSignUpScreen(
                 title: 'User Sign Up',
+                isLogin: true,
               );
             }
           } else {

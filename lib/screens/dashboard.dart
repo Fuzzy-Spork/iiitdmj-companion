@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/screens/faculty_search_screen.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
-import 'setting_screen.dart';
+
 import '../constants.dart';
 import 'bus_schedule_screen.dart';
 import 'login_screen.dart';
 import 'mess_menu_screen.dart';
+import 'setting_screen.dart';
 import 'timetable_screen.dart';
-import 'about_screen.dart';
 
 class DashBoard extends StatefulWidget {
   @override
@@ -17,7 +17,6 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
-//    print(tt2[6]);
     Size size = MediaQuery.of(context).size;
     return FutureBuilder(
       future: StorageService.getInstance(),
@@ -96,12 +95,15 @@ class _DashBoardState extends State<DashBoard> {
                   SizedBox(
                     height: 5,
                   ),
-                  Text(
-                    '2019148',
-                    style: TextStyle(
-                        color: kTextColor,
-                        fontSize: size.height * 0.02,
-                        fontWeight: FontWeight.w700),
+                  Visibility(
+                    visible: false,
+                    child: Text(
+                      '2019148',
+                      style: TextStyle(
+                          color: kTextColor,
+                          fontSize: size.height * 0.02,
+                          fontWeight: FontWeight.w700),
+                    ),
                   ),
                   SizedBox(
                     height: size.height * 0.05,

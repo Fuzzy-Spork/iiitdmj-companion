@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/constants.dart';
+import 'package:iiitdmjcompanion/screens/dashboard.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -16,7 +18,6 @@ class _AboutScreenState extends State<AboutScreen> {
     if (await canLaunch(url)) {
       await launch(
         url,
-        forceSafariVC: false,
         forceWebView: false,
         headers: <String, String>{'my_header_key': 'my_header_value'},
       );
@@ -75,17 +76,37 @@ class _AboutScreenState extends State<AboutScreen> {
             SizedBox(
               height: size.height * 0.042,
             ),
-            Text(
-              'Connections\n'
-              'Link Frames together using\n'
-              'Connectins. While in prototype\n'
-              'mode, select a frame or any child\n'
-              'object within a frame',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: kBackgroundColor,
-                  fontSize: size.height * 0.03,
-                  fontWeight: FontWeight.w300),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RichText(
+                text: TextSpan(
+                  text: 'IIITDMJ Companion v1.0\n',
+                  style: TextStyle(
+                    color: kBackgroundColor,
+                    fontSize: size.height * 0.03,
+                    fontWeight: FontWeight.w300,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: 'Developed with love, to make your life easy\n\n',
+                    ),
+                    TextSpan(
+                      text: 'Report a Bug',
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DashBoard()));
+                        },
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                      ),
+                    )
+                  ],
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
             Spacer(),
             Text(
@@ -151,9 +172,7 @@ class _AboutScreenState extends State<AboutScreen> {
                                 onTap: () {
                                   setState(() {
                                     _launched = _launchInBrowser(
-
                                         "https://www.instagram.com/sehej.on.the.offbeat/");
-
                                   });
                                 },
                                 child: Icon(
