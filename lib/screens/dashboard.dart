@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/screens/faculty_search_screen.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
-
+import 'setting_screen.dart';
 import '../constants.dart';
 import 'bus_schedule_screen.dart';
 import 'login_screen.dart';
@@ -312,7 +312,7 @@ class _DashBoardState extends State<DashBoard> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AboutScreen()));
+                                    builder: (context) => SettingsScreen()));
                           });
                         },
                         child: Icon(
@@ -331,7 +331,7 @@ class _DashBoardState extends State<DashBoard> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AboutScreen()));
+                                    builder: (context) => SettingsScreen()));
                           });
                         },
                         child: Text(

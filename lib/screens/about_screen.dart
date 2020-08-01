@@ -134,7 +134,8 @@ class _AboutScreenState extends State<AboutScreen> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    _launched = _launchInBrowser("");
+                                    _launched = _launchInBrowser(
+                                        "https://github.com/sehejjain");
                                   });
                                 },
                                 child: Icon(
@@ -149,7 +150,9 @@ class _AboutScreenState extends State<AboutScreen> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    _launched = _launchInBrowser("");
+                                    _launched = _launchInBrowser(
+                                      "https://www.instagram.com/sehej.on.the.offbeat/",
+                                    );
                                   });
                                 },
                                 child: Icon(
@@ -314,7 +317,8 @@ class _AboutScreenState extends State<AboutScreen> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    _launched = _launchInBrowser("");
+                                    _launched = _launchInBrowser(
+                                        "https://behance.net/therealvishnur");
                                   });
                                 },
                                 child: Icon(
@@ -329,7 +333,8 @@ class _AboutScreenState extends State<AboutScreen> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    _launched = _launchInBrowser("");
+                                    _launched = _launchInBrowser(
+                                        "https://instagram.com/therealvishnur");
                                   });
                                 },
                                 child: Icon(
@@ -344,7 +349,8 @@ class _AboutScreenState extends State<AboutScreen> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    _launched = _launchInBrowser("");
+                                    _launched = _launchInBrowser(
+                                        "https://dribbble.com/therealvishnur");
                                   });
                                 },
                                 child: Icon(
