@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/constants.dart';
-import 'package:iiitdmjcompanion/screens/dashboard.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -80,7 +78,7 @@ class _AboutScreenState extends State<AboutScreen> {
               padding: const EdgeInsets.all(8.0),
               child: RichText(
                 text: TextSpan(
-                  text: 'IIITDMJ Companion v1.0\n',
+                  text: 'IIITDMJ Companion v1.0\n\n',
                   style: TextStyle(
                     color: kBackgroundColor,
                     fontSize: size.height * 0.03,
@@ -88,21 +86,14 @@ class _AboutScreenState extends State<AboutScreen> {
                   ),
                   children: [
                     TextSpan(
-                      text: 'Developed with love, to make your life easy\n\n',
+                      text: 'Developed with love,\n\n',
                     ),
                     TextSpan(
-                      text: 'Report a Bug',
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DashBoard()));
-                        },
+                      text: 'Sehej, Manish and Vishnu\n',
                       style: TextStyle(
-                        decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.bold,
                       ),
-                    )
+                    ),
                   ],
                 ),
                 textAlign: TextAlign.center,

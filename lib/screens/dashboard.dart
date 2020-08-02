@@ -112,13 +112,14 @@ class _DashBoardState extends State<DashBoard> {
                     'What are you looking for today ?',
                     style: TextStyle(
                       color: kTextColor,
-                      fontSize: size.height * 0.02,
+                      fontSize: size.height * 0.0275,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                   SizedBox(
                     height: size.height * 0.05,
                   ),
+                  Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [

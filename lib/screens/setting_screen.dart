@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/constants.dart';
+import 'package:iiitdmjcompanion/screens/contact_form.dart';
 import 'package:iiitdmjcompanion/services/storage_service.dart';
 
 import 'about_screen.dart';
@@ -109,12 +110,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
             SizedBox(
               height: size.height * 0.03,
             ),
-            Text(
-              'Contact Us',
-              style: TextStyle(
-                color: kBackgroundColor,
-                fontSize: size.height * 0.035,
-                fontWeight: FontWeight.w300,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ContactPage(),
+                  ),
+                );
+              },
+              child: Text(
+                'Contact Us',
+                style: TextStyle(
+                  color: kBackgroundColor,
+                  fontSize: size.height * 0.035,
+                  fontWeight: FontWeight.w300,
+                ),
               ),
             ),
             Spacer(),
