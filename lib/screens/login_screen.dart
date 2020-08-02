@@ -70,6 +70,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
     }
 
     return DropdownButton<String>(
+      iconEnabledColor: kIconColor,
       value: selectedBranch,
       items: dropdownItems,
       onChanged: (value) {
@@ -99,6 +100,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
     }
 
     return DropdownButton<String>(
+      iconEnabledColor: kIconColor,
       value: selectedYear,
       items: dropdownItems,
       onChanged: (value) {
@@ -240,7 +242,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                                   labelText: name == '' ? 'Name' : '',
                                   labelStyle: TextStyle(
                                       color: kTextColor,
-                                      fontSize: 15,
+                                      fontSize: 20,
                                       fontFamily: 'gilroy',
                                       fontWeight: FontWeight.w200),
                                   border: InputBorder.none,

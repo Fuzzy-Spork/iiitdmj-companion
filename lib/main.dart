@@ -57,8 +57,11 @@ class _LandingPageState extends State<LandingPage> {
               );
             }
           } else {
-            return Center(
-              child: CircularProgressIndicator(),
+            return Scaffold(
+              backgroundColor: Colors.white,
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
             );
           }
         }
