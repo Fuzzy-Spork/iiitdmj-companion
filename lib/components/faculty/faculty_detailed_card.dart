@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/constants.dart';
 import 'package:iiitdmjcompanion/services/size_config.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants.dart';
 import '../../models/instructor/instructor.dart';
@@ -16,6 +17,20 @@ class FacultyCard extends StatefulWidget {
 }
 
 class _FacultyCardState extends State<FacultyCard> {
+  Future<void> _launched;
+
+  Future<void> _launchInBrowser(String url) async {
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceWebView: false,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -191,22 +206,30 @@ class _FacultyCardState extends State<FacultyCard> {
                             ),
                           ),
                         ),
-                  Card(
-                    color: Color(0xffFFFFFF),
-                    borderOnForeground: false,
-                    shadowColor: Colors.transparent,
-                    margin: EdgeInsets.symmetric(horizontal: 25.0),
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.details,
-                        color: kIconColor,
-                      ),
-                      title: Text(
-                        widget.instructor.tilda,
-                        style: TextStyle(
-                          color: kTextColor,
-                          fontSize: 15.0,
-                          letterSpacing: 3,
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        _launched =
+                            _launchInBrowser("${widget.instructor.tilda}");
+                      });
+                    },
+                    child: Card(
+                      color: Color(0xffFFFFFF),
+                      borderOnForeground: false,
+                      shadowColor: Colors.transparent,
+                      margin: EdgeInsets.symmetric(horizontal: 25.0),
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.details,
+                          color: kIconColor,
+                        ),
+                        title: Text(
+                          widget.instructor.tilda,
+                          style: TextStyle(
+                            color: kTextColor,
+                            fontSize: 15.0,
+                            letterSpacing: 3,
+                          ),
                         ),
                       ),
                     ),
@@ -237,38 +260,46 @@ class _FacultyCardState extends State<FacultyCard> {
                 ],
               ),
             ),
-            Container(
-              height: 70,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: kBackgroundColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
+            InkWell(
+              onTap: () {
+                setState(() {
+                  _launched =
+                      _launchInBrowser("mailto:${widget.instructor.email}");
+                });
+              },
+              child: Container(
+                height: 70,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: kBackgroundColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
                 ),
-              ),
-              child: Center(
-                child: Row(
-                  children: [
-                    Spacer(),
-                    Icon(
-                      LineAwesomeIcons.envelope_1,
-                      color: Colors.white,
-                      size: 25,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Text(
-                      'Send an Email',
-                      style: TextStyle(
+                child: Center(
+                  child: Row(
+                    children: [
+                      Spacer(),
+                      Icon(
+                        LineAwesomeIcons.envelope_1,
                         color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w300,
+                        size: 25,
                       ),
-                    ),
-                    Spacer(),
-                  ],
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text(
+                        'Send an Email',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                      Spacer(),
+                    ],
+                  ),
                 ),
               ),
             )
