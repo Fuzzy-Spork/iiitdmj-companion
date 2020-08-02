@@ -74,30 +74,31 @@ class _AboutScreenState extends State<AboutScreen> {
             SizedBox(
               height: size.height * 0.042,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: RichText(
-                text: TextSpan(
-                  text: 'IIITDMJ Companion v1.0\n\n',
-                  style: TextStyle(
-                    color: kBackgroundColor,
-                    fontSize: size.height * 0.03,
-                    fontWeight: FontWeight.w300,
-                  ),
-                  children: [
-                    TextSpan(
-                      text: 'Developed with love,\n\n',
-                    ),
-                    TextSpan(
-                      text: 'Sehej, Manish and Vishnu\n',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+            RichText(
+              text: TextSpan(
+                text: 'IIITDMJ Companion v1.0\n\n',
+                style: TextStyle(
+                  color: kBackgroundColor,
+                  fontSize: size.height * 0.03,
+                  fontWeight: FontWeight.w300,
                 ),
-                textAlign: TextAlign.center,
+                children: [
+                  TextSpan(
+                    text: 'Developed with love,\n\n',
+                    style: TextStyle(
+                      fontSize: size.height * 0.027,
+                    ),
+                  ),
+                  TextSpan(
+                    text: 'Sehej, Manish and Vishnu\n',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: size.height * 0.028,
+                    ),
+                  ),
+                ],
               ),
+              textAlign: TextAlign.center,
             ),
             Spacer(),
             Text(

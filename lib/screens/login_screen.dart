@@ -239,10 +239,10 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                                 decoration: InputDecoration(
                                   labelText: name == '' ? 'Name' : '',
                                   labelStyle: TextStyle(
-                                    color: kTextColor,
-                                    fontSize: 15,
-                                    fontFamily: 'gilroy',
-                                  ),
+                                      color: kTextColor,
+                                      fontSize: 15,
+                                      fontFamily: 'gilroy',
+                                      fontWeight: FontWeight.w200),
                                   border: InputBorder.none,
                                 ),
                               )),
