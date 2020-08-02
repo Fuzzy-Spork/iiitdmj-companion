@@ -22,6 +22,7 @@ Instructor _$InstructorFromJson(Map<String, dynamic> json) {
     tags: (json['tags'] as List)
         ?.map((e) => _$enumDecodeNullable(_$TagEnumMap, e))
         ?.toList(),
+    image: json['image'] as String,
   );
 }
 
@@ -35,6 +36,7 @@ Map<String, dynamic> _$InstructorToJson(Instructor instance) =>
       'email': instance.email,
       'tilda': instance.tilda,
       'phone': instance.phone,
+      'image': instance.image,
       'tags': instance.tags?.map((e) => _$TagEnumMap[e])?.toList(),
     };
 

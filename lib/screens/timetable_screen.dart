@@ -17,6 +17,11 @@ class _TimeTableScreenState extends State<TimeTableScreen> {
   @override
   void initState() {
     super.initState();
+    if (DateTime.now().weekday > 5) {
+      _index = 0;
+    } else {
+      _index = DateTime.now().weekday - 1;
+    }
     getTimeTable().then((value) {
       setState(() {
         isLoading = false;

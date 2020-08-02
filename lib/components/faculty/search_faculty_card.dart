@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/constants.dart';
@@ -49,7 +50,11 @@ class _SearchFacultyCardState extends State<SearchFacultyCard> {
               padding: const EdgeInsets.only(left: 10, right: 5),
               child: CircleAvatar(
                 radius: horizVal * 7,
-                backgroundImage: AssetImage(widget.icon),
+                backgroundImage: widget.instructor.image == null
+                    ? AssetImage(widget.icon)
+                    : CachedNetworkImageProvider(
+                        widget.instructor.image,
+                      ),
               ),
             ),
             Expanded(

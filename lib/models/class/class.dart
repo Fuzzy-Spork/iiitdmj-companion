@@ -120,11 +120,27 @@ class Class implements Comparable {
 
   sort(Class a, Class b) {}
 
-  static Future<bool> isUsers(Class k, User user) async {
+  static bool semCheck(Class k, Course course) {
+    DateTime today = DateTime.now();
+    if ([1, 2, 3, 4, 5].contains(today.month) && course.sem == Semester.even) {
+      return true;
+    }
+    if ([7, 8, 9, 10, 11].contains(today.month) && course.sem == Semester.odd) {
+      return true;
+    }
+    return false;
+  }
+
+  static Future<bool> isUsers(Class k, User user, Course course) async {
     var course = await Course.courseFromName(k.course);
     if (course.year == user.year && k.group == user.group) {
-      print(course.year);
-      return true;
+      if (semCheck(k, course)) {
+        if (course.branch == 'Common' || course.branch == 'Common + Optional')
+          return true;
+        if (BranchEnumMap[user.branch] == course.branch) return true;
+        return false;
+      }
+      return false;
     } else
       return false;
   }
@@ -136,43 +152,44 @@ class Class implements Comparable {
     List<DocumentSnapshot> snaps = snap.documents;
     for (var doc in snaps) {
       Class a = Class.fromJson(doc.data);
+      Course course = await Course.courseFromName(a.course);
+      print(course.toJson());
       switch (a.day) {
         case Day.Monday:
           {
-            if (await isUsers(a, user)) {
+            if (await isUsers(a, user, course)) {
               finalClasses[0].add(a);
-              finalClasses[0].sort((a, b) => a.compareTo(b));
             }
             break;
           }
         case Day.Tuesday:
-          if (await isUsers(a, user)) {
+          if (await isUsers(a, user, course)) {
             finalClasses[1].add(a);
-            finalClasses[1].sort((a, b) => a.compareTo(b));
           }
           break;
         case Day.Wednesday:
-          if (await isUsers(a, user)) {
+          if (await isUsers(a, user, course)) {
             finalClasses[2].add(a);
-            finalClasses[2].sort((a, b) => a.compareTo(b));
           }
           break;
         case Day.Thursday:
-          if (await isUsers(a, user)) {
+          if (await isUsers(a, user, course)) {
             finalClasses[3].add(a);
-            finalClasses[3].sort((a, b) => a.compareTo(b));
           }
           break;
         case Day.Friday:
-          if (await isUsers(a, user)) {
+          if (await isUsers(a, user, course)) {
             finalClasses[4].add(a);
-            finalClasses[4].sort((a, b) => a.compareTo(b));
           }
           break;
         case Day.Saturday:
           break;
         case Day.Sunday:
           break;
+      }
+
+      for (var list in finalClasses) {
+        list.sort((a, b) => a.compareTo(b));
       }
     }
     print(finalClasses);

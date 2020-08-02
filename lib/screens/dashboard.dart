@@ -35,21 +35,24 @@ class _DashBoardState extends State<DashBoard> {
                 children: <Widget>[
                   Row(
                     children: [
-                      GestureDetector(
-                        onTap: () async {
-                          var prefs = await StorageService.getInstance();
-                          prefs.signOut();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => UserSignUpScreen(),
-                            ),
-                          );
-                        },
-                        child: Icon(
-                          Icons.account_circle,
-                          color: kIconColor,
-                          size: 32,
+                      Visibility(
+                        visible: false,
+                        child: GestureDetector(
+                          onTap: () async {
+                            var prefs = await StorageService.getInstance();
+                            prefs.signOut();
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UserSignUpScreen(),
+                              ),
+                            );
+                          },
+                          child: Icon(
+                            Icons.account_circle,
+                            color: kIconColor,
+                            size: 32,
+                          ),
                         ),
                       ),
                       Spacer(),

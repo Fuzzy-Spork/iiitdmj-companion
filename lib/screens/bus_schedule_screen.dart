@@ -12,14 +12,19 @@ class BusScheduleScreen extends StatefulWidget {
 class _BusScheduleScreenState extends State<BusScheduleScreen> {
   List items = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   int _index = 0;
+  bool isLoading = true;
   List<List<BusTT>> tt = [[], [], [], [], [], [], []];
   @override
   void initState() {
     super.initState();
-    getBusTT();
+    getBusTT().then((value) {
+      setState(() {
+        isLoading = false;
+      });
+    });
   }
 
-  void getBusTT() async {
+  Future getBusTT() async {
     QuerySnapshot query =
         await Firestore.instance.collection('Bus').getDocuments();
     print(query.documents);
@@ -113,27 +118,31 @@ class _BusScheduleScreenState extends State<BusScheduleScreen> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: ListView.builder(
-                itemCount: tt[_index].length,
-                itemBuilder: (context, i) {
-                  if (i != (tt[_index].length - 1)) {
-                    print(i);
-                    return BusScheduleCard(
-                      visible: true,
-                      size: size,
-                      time: tt[_index][i].time,
-                      route: tt[_index][i].toFrom,
-                    );
-                  } else {
-                    return BusScheduleCard(
-                      visible: false,
-                      size: size,
-                      time: tt[_index][i].time,
-                      route: tt[_index][i].toFrom,
-                    );
-                  }
-                },
-              ),
+              child: isLoading == true
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ListView.builder(
+                      itemCount: tt[_index].length,
+                      itemBuilder: (context, i) {
+                        if (i != (tt[_index].length - 1)) {
+                          print(i);
+                          return BusScheduleCard(
+                            visible: true,
+                            size: size,
+                            time: tt[_index][i].time,
+                            route: tt[_index][i].toFrom,
+                          );
+                        } else {
+                          return BusScheduleCard(
+                            visible: false,
+                            size: size,
+                            time: tt[_index][i].time,
+                            route: tt[_index][i].toFrom,
+                          );
+                        }
+                      },
+                    ),
             )
           ],
         ),

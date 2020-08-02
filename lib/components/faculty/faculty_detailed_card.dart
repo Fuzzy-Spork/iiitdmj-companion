@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/constants.dart';
@@ -59,7 +60,11 @@ class _FacultyCardState extends State<FacultyCard> {
                   ),
                   CircleAvatar(
                     radius: vertVal * 8,
-                    backgroundImage: AssetImage('assets/download.png'),
+                    backgroundImage: widget.instructor.image == null
+                        ? AssetImage('assets/download.png')
+                        : CachedNetworkImageProvider(
+                            widget.instructor.image,
+                          ),
                   ),
 //                  CircleAvatar(
 //                    radius: vertVal * 8,

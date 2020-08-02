@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-
-
 part 'instructor.g.dart';
 
 //DO NOT CHANGE
@@ -109,6 +107,7 @@ class Instructor {
   String email;
   String tilda;
   String phone;
+  String image;
   List<Tag> tags;
 
   Instructor({
@@ -121,6 +120,7 @@ class Instructor {
     this.tilda,
     this.phone,
     this.tags,
+    this.image,
   });
 
   factory Instructor.fromJson(Map<String, dynamic> json) =>
@@ -175,18 +175,18 @@ class Instructor {
     Tag.Warden_PGHostel: 'Warden - PG Hostel',
   };
   static const departmentEnumMap = {
-  Department.CSE: 'CSE',
-  Department.ECE: 'ECE',
-  Department.Design: 'Design',
-  Department.ME: 'ME',
-  Department.NS: 'NS',
-};
+    Department.CSE: 'CSE',
+    Department.ECE: 'ECE',
+    Department.Design: 'Design',
+    Department.ME: 'ME',
+    Department.NS: 'NS',
+  };
 
-static const buildingEnumMap = {
-  Building.CC: 'Computer Center',
-  Building.LHTC: 'LHTC',
-  Building.CLC: 'Core Lab Complex',
-  Building.Acad: 'Academic Block',
-  Building.Bank: 'Near Bank',
-};
+  static const buildingEnumMap = {
+    Building.CC: 'Computer Center',
+    Building.LHTC: 'LHTC',
+    Building.CLC: 'Core Lab Complex',
+    Building.Acad: 'Academic Block',
+    Building.Bank: 'Near Bank',
+  };
 }
