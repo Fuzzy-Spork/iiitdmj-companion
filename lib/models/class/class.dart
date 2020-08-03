@@ -122,17 +122,17 @@ class Class implements Comparable {
 
   static bool semCheck(Class k, Course course) {
     DateTime today = DateTime.now();
-    if ([1, 2, 3, 4, 5].contains(today.month) && course.sem == Semester.even) {
+    if (![1, 2, 3, 4, 5].contains(today.month) && course.sem == Semester.even) {
       return true;
     }
-    if ([7, 8, 9, 10, 11].contains(today.month) && course.sem == Semester.odd) {
+    if (![7, 8, 9, 10, 11].contains(today.month) &&
+        course.sem == Semester.odd) {
       return true;
     }
     return false;
   }
 
-  static Future<bool> isUsers(Class k, User user, Course course) async {
-    var course = await Course.courseFromName(k.course);
+  static bool isUsers(Class k, User user, Course course) {
     if (course.year == user.year && k.group == user.group) {
       if (semCheck(k, course)) {
         if (course.branch == 'Common' || course.branch == 'Common + Optional')
@@ -143,6 +143,54 @@ class Class implements Comparable {
       return false;
     } else
       return false;
+  }
+
+  static finalClassesList(List docs, Map courses, User user) {
+    List<List<Class>> finalClasses = [[], [], [], [], []];
+    //print(courses);
+    for (var doc in docs) {
+      Class a = Class.fromJson(doc.data);
+
+      Course course = courses[a.course];
+
+      switch (a.day) {
+        case Day.Monday:
+          {
+            if (isUsers(a, user, course)) {
+              finalClasses[0].add(a);
+            }
+            break;
+          }
+        case Day.Tuesday:
+          if (isUsers(a, user, course)) {
+            finalClasses[1].add(a);
+          }
+          break;
+        case Day.Wednesday:
+          if (isUsers(a, user, course)) {
+            finalClasses[2].add(a);
+          }
+          break;
+        case Day.Thursday:
+          if (isUsers(a, user, course)) {
+            finalClasses[3].add(a);
+          }
+          break;
+        case Day.Friday:
+          if (isUsers(a, user, course)) {
+            finalClasses[4].add(a);
+          }
+          break;
+        case Day.Saturday:
+          break;
+        case Day.Sunday:
+          break;
+      }
+    }
+    for (var list in finalClasses) {
+      list.sort((a, b) => a.compareTo(b));
+    }
+    return finalClasses;
   }
 
   static Future<List> classesFromQuerySnapshot(QuerySnapshot snap) async {
@@ -157,28 +205,28 @@ class Class implements Comparable {
       switch (a.day) {
         case Day.Monday:
           {
-            if (await isUsers(a, user, course)) {
+            if (isUsers(a, user, course)) {
               finalClasses[0].add(a);
             }
             break;
           }
         case Day.Tuesday:
-          if (await isUsers(a, user, course)) {
+          if (isUsers(a, user, course)) {
             finalClasses[1].add(a);
           }
           break;
         case Day.Wednesday:
-          if (await isUsers(a, user, course)) {
+          if (isUsers(a, user, course)) {
             finalClasses[2].add(a);
           }
           break;
         case Day.Thursday:
-          if (await isUsers(a, user, course)) {
+          if (isUsers(a, user, course)) {
             finalClasses[3].add(a);
           }
           break;
         case Day.Friday:
-          if (await isUsers(a, user, course)) {
+          if (isUsers(a, user, course)) {
             finalClasses[4].add(a);
           }
           break;
@@ -195,11 +243,6 @@ class Class implements Comparable {
     print(finalClasses);
     return finalClasses;
   }
-
-  // static String time(Class k) {
-  //   DateTime time = k.timeStart
-  //   return '';
-  // }
 
   static const Map<int, Day> dayIntMap = {
     1: Day.Monday,

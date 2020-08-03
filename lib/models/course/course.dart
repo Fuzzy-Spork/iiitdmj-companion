@@ -54,8 +54,19 @@ class Course {
 
   Map<String, dynamic> toJson() => _$CourseToJson(this);
 
+  static Future<Map<String, Course>> getAllCoursesMap() async {
+    QuerySnapshot query =
+        await Firestore.instance.collection('Courses').getDocuments();
+    Map<String, Course> courses = {};
+    for (var snap in query.documents) {
+      courses[snap.data['code']] = Course.fromJson(snap.data);
+    }
+    return courses;
+  }
+
   static Future<Course> courseFromName(String name) async {
-    DocumentSnapshot doc= await Firestore.instance.collection('Courses').document(name).get();
+    DocumentSnapshot doc =
+        await Firestore.instance.collection('Courses').document(name).get();
     return Course.fromJson(doc.data);
   }
 }

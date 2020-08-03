@@ -76,7 +76,7 @@ class _FacultyCardState extends State<FacultyCard> {
                   CircleAvatar(
                     radius: vertVal * 8,
                     backgroundImage: widget.instructor.image == null
-                        ? AssetImage('assets/download.png')
+                        ? AssetImage('assets/profile.jpeg')
                         : CachedNetworkImageProvider(
                             widget.instructor.image,
                           ),

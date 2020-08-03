@@ -51,7 +51,7 @@ class _SearchFacultyCardState extends State<SearchFacultyCard> {
               child: CircleAvatar(
                 radius: horizVal * 7,
                 backgroundImage: widget.instructor.image == null
-                    ? AssetImage(widget.icon)
+                    ? AssetImage('assets/profile.jpeg')
                     : CachedNetworkImageProvider(
                         widget.instructor.image,
                       ),

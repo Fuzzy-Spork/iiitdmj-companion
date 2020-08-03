@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iiitdmjcompanion/components/timetable_card.dart';
 import 'package:iiitdmjcompanion/constants.dart';
+import 'package:iiitdmjcompanion/models/course/course.dart';
+import 'package:iiitdmjcompanion/models/user/user.dart';
+import 'package:iiitdmjcompanion/services/storage_service.dart';
 
 import '../models/class/class.dart';
 
@@ -13,27 +16,26 @@ class TimeTableScreen extends StatefulWidget {
 class _TimeTableScreenState extends State<TimeTableScreen> {
   List items = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   int _index = 0;
-  bool isLoading = true;
+  Map<String, Course> courses;
+  User user;
   @override
   void initState() {
     super.initState();
+
+    getCoursesAndUser().then((value) {
+      setState(() {});
+    });
     if (DateTime.now().weekday > 5) {
       _index = 0;
     } else {
       _index = DateTime.now().weekday - 1;
     }
-    getTimeTable().then((value) {
-      setState(() {
-        isLoading = false;
-      });
-    });
   }
 
-  List<List<Class>> classes;
-  Future getTimeTable() async {
-    QuerySnapshot db =
-        await Firestore.instance.collection('Classes').getDocuments();
-    classes = await Class.classesFromQuerySnapshot(db);
+  Future getCoursesAndUser() async {
+    courses = await Course.getAllCoursesMap();
+    var prefs = await StorageService.getInstance();
+    user = prefs.userInDB;
   }
 
   @override
@@ -119,32 +121,51 @@ class _TimeTableScreenState extends State<TimeTableScreen> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: isLoading == true
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : ListView.builder(
-                      itemCount: classes[_index].length,
-                      itemBuilder: (context, i) {
-                        if (i != (classes[_index].length - 1)) {
-                          return TimeTableCard(
+              child: StreamBuilder(
+                stream: Firestore.instance.collection('Classes').snapshots(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (!snapshot.hasData || user == null) {
+                    return Container(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  } else {
+                    List<List<Class>> finalClasses = [[], [], [], [], []];
+                    finalClasses = Class.finalClassesList(
+                        snapshot.data.documents, courses, user);
+                    List<TimeTableCard> list = [];
+                    for (int i = 0; i != finalClasses[_index].length; i++) {
+                      if (i != (finalClasses[_index].length - 1)) {
+                        list.add(
+                          TimeTableCard(
                             visible: true,
                             size: size,
-                            courseCode: classes[_index][i].course,
-                            time: classes[_index][i].timeStart,
-                            venue: Class.venueEnumMap[classes[_index][i].venue],
-                          );
-                        } else {
-                          return TimeTableCard(
+                            courseCode: finalClasses[_index][i].course,
+                            time: finalClasses[_index][i].timeStart,
+                            venue: Class
+                                .venueEnumMap[finalClasses[_index][i].venue],
+                          ),
+                        );
+                      } else {
+                        list.add(
+                          TimeTableCard(
                             visible: false,
                             size: size,
-                            courseCode: classes[_index][i].course,
-                            time: classes[_index][i].timeStart,
-                            venue: Class.venueEnumMap[classes[_index][i].venue],
-                          );
-                        }
-                      },
-                    ),
+                            courseCode: finalClasses[_index][i].course,
+                            time: finalClasses[_index][i].timeStart,
+                            venue: Class
+                                .venueEnumMap[finalClasses[_index][i].venue],
+                          ),
+                        );
+                      }
+                    }
+                    return ListView(
+                      children: list,
+                    );
+                  }
+                },
+              ),
             )
           ],
         ),
