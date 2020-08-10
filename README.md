@@ -9,4 +9,4 @@ A Companion for IIITDMJ Students. Helps newcomers to get acquainted and acclimat
 
 To make use of the open source repo of the app, first create a firebase project, and add Firebase Service files for Android and iOS repectively.
 
-```Developed with love, by Manish, Sehej and Vishnu
+```Developed with love, by Manish, Sehej and Vishnu```
